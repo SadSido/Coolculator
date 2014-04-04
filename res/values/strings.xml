@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="app_name">Coolculator</string>
+    <string name="menu_start">Start</string>
+    <string name="menu_howto">How to play</string>
+
+</resources>
