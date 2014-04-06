@@ -79,6 +79,7 @@ public class MainActivity extends SimpleBaseGameActivity
         m_texButton = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(atlas, getAssets(), "button.png", 1, 1);
         m_texButton.setTextureWidth(350.0f);
         m_texButton.setTextureHeight(180.0f);
+        
         try 
         {
             atlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));

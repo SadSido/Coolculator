@@ -10,6 +10,7 @@ import org.andengine.util.color.Color;
 import sadsido.coolculator.MainActivity;
 import sadsido.coolculator.game.Button;
 import sadsido.coolculator.game.Generator;
+import sadsido.coolculator.game.Score;
 import sadsido.coolculator.game.Timebar;
 
 
@@ -52,8 +53,8 @@ public class GameScene extends Scene
 	
 	// sprite to show score:
 	
-	private int  m_score;
-	private Text m_text;
+	private Score m_score;
+	// private Score m_record;
 
 	// timebar to show remaining time:
 	
@@ -105,11 +106,10 @@ public class GameScene extends Scene
 
 		// init score area:
 		
-		m_text = new Text(0, 0, MainActivity.instance().getMenuFont(), "0000", m_activity.getVertexBufferObjectManager());
-		m_text.setColor(Color.RED);
-		m_text.setPosition((m_activity.getCamera().getWidth() - m_text.getWidth()) / 2.0f, m_activity.getCamera().getHeight() - m_text.getHeight());
+		m_score = new Score(0.0f, 0.0f, MainActivity.instance().getMenuFont(), 0, m_activity.getVertexBufferObjectManager());
+		m_score.setPosition((m_activity.getCamera().getWidth() - m_score.getWidth()) / 2.0f, m_activity.getCamera().getHeight() - m_score.getHeight());
 	
-		attachChild(m_text);
+		attachChild(m_score);
 	}
 
 	//*******************************************************************************************
@@ -186,10 +186,8 @@ public class GameScene extends Scene
 		if (!hasAnimation())
 		{
 			// modify current score:
-			int factor = (isEquationValid()) ? +1 : -1;
-			int delta  = m_buttons[m_selections[3]][3].value();
-			
-			changeScore(factor * delta);
+			final int delta = m_buttons[m_selections[3]][3].value();
+			if (isEquationValid()) { m_score.inc(delta); } else { m_score.dec(delta); }
 			
 			// must run fall animation:
 			if (firstRowSelected())
@@ -376,14 +374,6 @@ public class GameScene extends Scene
 				
 		return result == b3.value();	
 	}
-	
-	// score helpers:
-	
-	private void changeScore(int delta)
-	{
-		m_score = Math.max(m_score + delta, 0);
-		m_text.setText(String.format("%04d", m_score));
-	}
-	
+		
 	//*******************************************************************************************
 }
