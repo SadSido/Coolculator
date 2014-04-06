@@ -8,6 +8,14 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
+import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
+import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
+import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 
 import sadsido.coolculator.scenes.SplashScene;
@@ -28,6 +36,8 @@ public class MainActivity extends SimpleBaseGameActivity
 	private Camera m_camera; 
 	private Font m_menuFont;
 	
+	private ITextureRegion m_texButton;
+	
 	//*******************************************************************************************
 	
 	public MainActivity()
@@ -47,6 +57,9 @@ public class MainActivity extends SimpleBaseGameActivity
 	public void setScene(Scene scene)
 	{ getEngine().setScene(scene); }
 	
+	public ITextureRegion getButtonTexture()
+	{ return m_texButton; }
+	
 	//*******************************************************************************************
 
 	@Override
@@ -61,6 +74,20 @@ public class MainActivity extends SimpleBaseGameActivity
 	{
 		m_menuFont = FontFactory.createFromAsset(getFontManager(), getTextureManager(), 512, 512, TextureOptions.BILINEAR, getAssets(), "airborne.ttf", 100, true, Color.WHITE);
 		m_menuFont.load();
+		
+		BuildableBitmapTextureAtlas atlas = new BuildableBitmapTextureAtlas(getTextureManager(), 64, 64, TextureOptions.REPEATING_BILINEAR);
+        m_texButton = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(atlas, getAssets(), "button.png", 1, 1);
+        m_texButton.setTextureWidth(350.0f);
+        m_texButton.setTextureHeight(180.0f);
+        try 
+        {
+            atlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
+            atlas.load();
+        } 
+        catch (TextureAtlasBuilderException e) 
+        {
+            e.printStackTrace();
+        }	
 	}
 
 	@Override

@@ -86,7 +86,7 @@ public class GameScene extends Scene
 			float posX = colNo * BTN_WID;
 			float posY = rowNo * BTN_HGT;
 			
-			m_buttons[rowNo][colNo] = new Button(this, rowNo, colNo, posX + BTN_MRG, posY + BTN_MRG, BTN_WID - BTN_MRG, BTN_HGT - BTN_MRG, m_activity.getVertexBufferObjectManager());
+			m_buttons[rowNo][colNo] = new Button(this, rowNo, colNo, posX + BTN_MRG, posY + BTN_MRG, BTN_WID - BTN_MRG, BTN_HGT - BTN_MRG, m_activity.getButtonTexture(), m_activity.getVertexBufferObjectManager());
 		
 			attachChild(m_buttons[rowNo][colNo]);
 			registerTouchArea(m_buttons[rowNo][colNo]);

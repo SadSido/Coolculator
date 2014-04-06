@@ -1,6 +1,5 @@
 package sadsido.coolculator.game;
 
-import android.annotation.SuppressLint;
 import org.andengine.entity.modifier.ColorModifier;
 import org.andengine.entity.modifier.IEntityModifier;
 import org.andengine.entity.modifier.MoveYModifier;
@@ -8,24 +7,22 @@ import org.andengine.entity.modifier.ParallelEntityModifier;
 import org.andengine.entity.modifier.ScaleAtModifier;
 import org.andengine.entity.modifier.ScaleModifier;
 import org.andengine.entity.modifier.SequenceEntityModifier;
-import org.andengine.entity.primitive.Rectangle;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
+import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.Color;
-import org.andengine.util.modifier.ease.EaseExponentialIn;
-import org.andengine.util.modifier.ease.EaseExponentialOut;
 import org.andengine.util.modifier.ease.EaseQuadIn;
 import org.andengine.util.modifier.ease.EaseQuadOut;
-import org.andengine.util.modifier.ease.EaseStrongOut;
-import org.andengine.util.modifier.ease.IEaseFunction;
 
 import sadsido.coolculator.MainActivity;
 import sadsido.coolculator.scenes.GameScene;
+import android.annotation.SuppressLint;
 
 
 
-public class Button extends Rectangle
+public class Button extends Sprite
 {
 	//*******************************************************************************************
 
@@ -59,15 +56,16 @@ public class Button extends Rectangle
 	
 	//*******************************************************************************************
 
-	public Button(GameScene scene, int row, int col, float pX, float pY, float pWidth, float pHeight, VertexBufferObjectManager pVBO) 
+	public Button(GameScene scene, int row, int col, float pX, float pY, float pWidth, float pHeight, ITextureRegion region, VertexBufferObjectManager pVBO) 
 	{
-		super(pX, pY, pWidth, pHeight, pVBO);
-		
+		super(pX, pY, pWidth, pHeight, region, pVBO);
+				
 		m_scene  = scene;
 		m_row    = row;
 		m_col    = col;
 		
 		setColor(Color.WHITE);
+		
 		
 		m_text = new Text(0, 0, MainActivity.instance().getMenuFont(), "xxx", pVBO);
 		m_text.setColor(Color.BLACK);
