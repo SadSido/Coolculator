@@ -10,6 +10,8 @@ import org.andengine.util.color.Color;
 import sadsido.coolculator.MainActivity;
 import sadsido.coolculator.game.Button;
 import sadsido.coolculator.game.Generator;
+import sadsido.coolculator.game.Layout;
+import sadsido.coolculator.game.Layout.Rect;
 import sadsido.coolculator.game.Score;
 import sadsido.coolculator.game.Timebar;
 
@@ -21,13 +23,9 @@ public class GameScene extends Scene
 
 	MainActivity m_activity;
 	
-	private static final int BTN_ROWS = 4;
+	private static final int BTN_ROWS = 5;
 	private static final int BTN_COLS = 4;
-	
-	private static final float BTN_WID = 350.0f;
-	private static final float BTN_HGT = 180.0f;
-	private static final float BTN_MRG = 10.0f;
-	
+		
 	
 	
 	
@@ -35,6 +33,10 @@ public class GameScene extends Scene
 	
 	//*******************************************************************************************
 
+	// layouter:
+	
+	private Layout m_layout;
+	
 	// array of coolculator buttons:
 	
 	private Button[][] m_buttons;
@@ -65,6 +67,7 @@ public class GameScene extends Scene
 	public GameScene()
 	{
 		m_activity     = MainActivity.instance();
+		m_layout       = new Layout(m_activity.getCamera());
 		m_buttons      = new Button[BTN_ROWS][BTN_COLS];
 		m_selections   = new int[BTN_COLS];
 		m_animationSet = new HashSet<Button>();
@@ -84,10 +87,9 @@ public class GameScene extends Scene
 		for (int rowNo = 0; rowNo < BTN_ROWS; ++ rowNo)
 		for (int colNo = 0; colNo < BTN_COLS; ++ colNo)
 		{
-			float posX = colNo * BTN_WID;
-			float posY = rowNo * BTN_HGT;
+			Rect rc = m_layout.rcButton(colNo, rowNo);
 			
-			m_buttons[rowNo][colNo] = new Button(this, rowNo, colNo, posX + BTN_MRG, posY + BTN_MRG, BTN_WID - BTN_MRG, BTN_HGT - BTN_MRG, m_activity.getButtonTexture(), m_activity.getVertexBufferObjectManager());
+			m_buttons[rowNo][colNo] = new Button(this, rowNo, colNo, rc.left, rc.top, rc.width(), rc.height(), m_activity.getButtonTexture(), m_activity.getVertexBufferObjectManager());
 		
 			attachChild(m_buttons[rowNo][colNo]);
 			registerTouchArea(m_buttons[rowNo][colNo]);
@@ -204,7 +206,7 @@ public class GameScene extends Scene
 					for (int rowNo = 0; rowNo < selection; ++ rowNo)
 					{
 						m_animationSet.add(m_buttons[rowNo][colNo]);
-						m_buttons[rowNo][colNo].playFallingAnimation((selection - rowNo - 1) * 0.03f, BTN_HGT);
+						m_buttons[rowNo][colNo].playFallingAnimation((selection - rowNo - 1) * 0.03f, m_layout.rcButton().height());
 					}
 				}
 			}
@@ -243,7 +245,7 @@ public class GameScene extends Scene
 				
 				// play emerge animation:
 				m_animationSet.add(btn);
-				btn.playEmergeAnimation(0.03f * colNo, BTN_MRG);				
+				btn.playEmergeAnimation(0.03f * colNo, m_layout.rcButtons().top);				
 			}
 		}
 	}
