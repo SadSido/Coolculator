@@ -184,7 +184,7 @@ public class Button extends Sprite
 		IEntityModifier modifier = new SequenceEntityModifier
 		(			
 			new MoveYModifier(delay, getY(), getY()),	
-			new MoveYModifier(0.15f, getY(), toY, EaseQuadOut.getInstance())
+			new MoveYModifier(0.25f, getY(), toY, EaseQuadOut.getInstance())
 		)
 		{
 			@Override

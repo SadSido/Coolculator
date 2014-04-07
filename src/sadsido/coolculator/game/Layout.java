@@ -30,6 +30,7 @@ public class Layout
 
 	private Rect m_rcButtons;
 	private Rect m_rcButton;
+	private Rect m_rcTimebar;
 	
 	//*******************************************************************************************
 
@@ -46,6 +47,9 @@ public class Layout
 		makeAspect(m_rcButtons, 2.0f * Const.Cols / Const.Rows);
 		
 		m_rcButton = new Rect(0.0f, 0.0f, m_rcButtons.width() / Const.Cols, m_rcButtons.height() / Const.Rows);
+		
+		final float delta = (topBar - 30.0f) / 2.0f;
+		m_rcTimebar = new Rect(m_rcButtons.left, delta, m_rcButtons.right, topBar - delta);
 	}
 	
 	//*******************************************************************************************
@@ -63,6 +67,9 @@ public class Layout
 		
 		return new Rect(left, top, left + m_rcButton.width(), top + m_rcButton.height()); 
 	}
+	
+	public Rect rcTimebar()
+	{ return m_rcTimebar; }
 	
 	//*******************************************************************************************
 

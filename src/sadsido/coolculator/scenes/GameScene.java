@@ -67,7 +67,9 @@ public class GameScene extends Scene
 		m_selections   = new int[Const.Cols];
 		m_animationSet = new HashSet<Button>();
 		m_gens         = new Generator[Const.Cols];
-		m_timebar      = new Timebar(this, 0, m_activity.getCamera().getHeight() - 10.0f, m_activity.getCamera().getWidth(), 10.0f, m_activity.getVertexBufferObjectManager());
+		
+		Rect rcTime    = m_layout.rcTimebar();
+		m_timebar      = new Timebar(this, rcTime.left, rcTime.top, rcTime.width(), rcTime.height(), m_activity.getVertexBufferObjectManager());
 
 		attachChild(m_timebar);
 		m_timebar.playTimeoutAnimation();
