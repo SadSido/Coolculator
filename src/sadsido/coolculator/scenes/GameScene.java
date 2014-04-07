@@ -9,6 +9,7 @@ import org.andengine.util.color.Color;
 
 import sadsido.coolculator.MainActivity;
 import sadsido.coolculator.game.Button;
+import sadsido.coolculator.game.Const;
 import sadsido.coolculator.game.Generator;
 import sadsido.coolculator.game.Layout;
 import sadsido.coolculator.game.Layout.Rect;
@@ -22,12 +23,6 @@ public class GameScene extends Scene
 	//*******************************************************************************************
 
 	MainActivity m_activity;
-	
-	private static final int BTN_ROWS = 5;
-	private static final int BTN_COLS = 4;
-		
-	
-	
 	
 	private static final int NO_SELECTION   = -1;
 	
@@ -68,10 +63,10 @@ public class GameScene extends Scene
 	{
 		m_activity     = MainActivity.instance();
 		m_layout       = new Layout(m_activity.getCamera());
-		m_buttons      = new Button[BTN_ROWS][BTN_COLS];
-		m_selections   = new int[BTN_COLS];
+		m_buttons      = new Button[Const.Rows][Const.Cols];
+		m_selections   = new int[Const.Cols];
 		m_animationSet = new HashSet<Button>();
-		m_gens         = new Generator[BTN_COLS];
+		m_gens         = new Generator[Const.Cols];
 		m_timebar      = new Timebar(this, 0, m_activity.getCamera().getHeight() - 10.0f, m_activity.getCamera().getWidth(), 10.0f, m_activity.getVertexBufferObjectManager());
 
 		attachChild(m_timebar);
@@ -79,13 +74,13 @@ public class GameScene extends Scene
 		
 		// init generators:
 		
-		for (int colNo = 0; colNo < BTN_COLS; ++ colNo)
+		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
 		{ m_gens[colNo] = new Generator(colNo);	}
 				
 		// init buttons:
 		
-		for (int rowNo = 0; rowNo < BTN_ROWS; ++ rowNo)
-		for (int colNo = 0; colNo < BTN_COLS; ++ colNo)
+		for (int rowNo = 0; rowNo < Const.Rows; ++ rowNo)
+		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
 		{
 			Rect rc = m_layout.rcButton(colNo, rowNo);
 			
@@ -169,7 +164,7 @@ public class GameScene extends Scene
 			m_timebar.playResetAnimation();
 			
 			// vanish selected buttons:
-			for (int colNo = 0; colNo < BTN_COLS; ++ colNo)
+			for (int colNo = 0; colNo < Const.Cols; ++ colNo)
 			{ 
 				m_animationSet.add(m_buttons[m_selections[colNo]][colNo]);
 				m_buttons[m_selections[colNo]][colNo].playVanishAnimation(0.03f * colNo);
@@ -200,7 +195,7 @@ public class GameScene extends Scene
 			else
 			{
 				// must fill in the gaps by falling down:
-				for (int colNo = 0; colNo < BTN_COLS; ++ colNo)
+				for (int colNo = 0; colNo < Const.Cols; ++ colNo)
 				{
 					final int selection = m_selections[colNo];
 					for (int rowNo = 0; rowNo < selection; ++ rowNo)
@@ -224,7 +219,7 @@ public class GameScene extends Scene
 		
 		if (!hasAnimation())
 		{
-			for (int colNo = 0; colNo < BTN_COLS; ++ colNo)
+			for (int colNo = 0; colNo < Const.Cols; ++ colNo)
 			{
 				final Button    btn = m_buttons[m_selections[colNo]][colNo];
 				final Generator gen = m_gens[colNo];
@@ -261,7 +256,7 @@ public class GameScene extends Scene
 		if (!hasAnimation())
 		{
 			// we have to re-assign correct indices to all buttons:
-			for (int colNo = 0; colNo < BTN_COLS; ++ colNo)
+			for (int colNo = 0; colNo < Const.Cols; ++ colNo)
 			{
 				final int selection = m_selections[colNo];
 				Button btn = m_buttons[selection][colNo];
@@ -304,8 +299,8 @@ public class GameScene extends Scene
 		m_animationSet.clear();
 		
 		// seems like the game is over:
-		for (int rowNo = 0; rowNo < BTN_ROWS; ++ rowNo)
-		for (int colNo = 0; colNo < BTN_COLS; ++ colNo)
+		for (int rowNo = 0; rowNo < Const.Rows; ++ rowNo)
+		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
 		{
 			m_animationSet.add(m_buttons[rowNo][colNo]);
 			m_buttons[rowNo][colNo].clearEntityModifiers();
@@ -324,7 +319,7 @@ public class GameScene extends Scene
 	
 	private void resetSelection()
 	{
-		for (int colNo = 0; colNo < BTN_COLS; ++ colNo)
+		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
 		{ m_selections[colNo] = NO_SELECTION; }	
 	}
 	

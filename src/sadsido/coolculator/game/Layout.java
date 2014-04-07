@@ -42,10 +42,10 @@ public class Layout
 		
 		m_rcButtons = new Rect(0.0f, topBar, m_width, m_height);
 		
-		addMargins(m_rcButtons, 20.0f);
-		makeAspect(m_rcButtons, 8.0f / 5.0f);
+		addMargins(m_rcButtons, 40.0f);
+		makeAspect(m_rcButtons, 2.0f * Const.Cols / Const.Rows);
 		
-		m_rcButton = new Rect(0.0f, 0.0f, m_rcButtons.width() / 4.0f, m_rcButtons.height() / 5.0f);
+		m_rcButton = new Rect(0.0f, 0.0f, m_rcButtons.width() / Const.Cols, m_rcButtons.height() / Const.Rows);
 	}
 	
 	//*******************************************************************************************
