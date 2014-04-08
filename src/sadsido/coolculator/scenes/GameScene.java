@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.text.Text;
 import org.andengine.util.color.Color;
 
@@ -69,6 +70,8 @@ public class GameScene extends Scene
 		m_selections   = new int[Const.Cols];
 		m_animationSet = new HashSet<Button>();
 		m_gens         = new Generator[Const.Cols];
+		
+		setBackground(new Background(0.1f, 0.1f, 0.3f));
 		
 		Rect rcTime    = m_layout.rcTimebar();
 		m_timebar      = new Timebar(this, rcTime.left, rcTime.top, rcTime.width(), rcTime.height(), m_activity.getVertexBufferObjectManager());

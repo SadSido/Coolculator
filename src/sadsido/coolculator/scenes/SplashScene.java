@@ -22,7 +22,7 @@ public class SplashScene extends Scene implements IOnSceneTouchListener
 	{
 		m_activity = MainActivity.instance();
 		
-		//setBackground(new Background(0.09804f, 0.6274f, 0));
+		//
 		setOnSceneTouchListener(this);
 	}
 

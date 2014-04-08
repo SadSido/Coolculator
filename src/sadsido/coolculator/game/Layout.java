@@ -41,7 +41,7 @@ public class Layout
 		m_width  = camera.getWidth();
 		m_height = camera.getHeight();
 		
-		float topBar = m_height / 6.0f;
+		float topBar = m_height / 7.0f;
 		float lftBar = m_width  / 5.0f; 
 		
 		m_rcButtons = new Rect(0.0f, topBar, m_width, m_height);
@@ -54,7 +54,7 @@ public class Layout
 		m_rcScore   = new Rect(0.0f, 0.0f, lftBar, topBar);
 		m_rcRecord  = new Rect(m_width - lftBar, 0.0f, m_width, topBar);
 		
-		m_rcTimebar = new Rect(m_rcScore.right, 0.0f, m_rcRecord.left, topBar);
+		m_rcTimebar = new Rect(m_rcScore.right, topBar / 2.0f - 15.0f, m_rcRecord.left, topBar / 2.0f + 15.0f);
 	}
 	
 	//*******************************************************************************************
