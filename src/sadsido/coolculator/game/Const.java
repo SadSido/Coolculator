@@ -13,9 +13,11 @@ public class Const
 	
 	// some predefined colors:
 	
-	public final static Color SignColor = new Color(0.80f, 0.80f, 0.80f);
-	public final static Color MultColor = new Color(1.00f, 0.60f, 0.60f);
+	public final static Color SignColor = new Color(0.85f, 0.85f, 0.85f);
+	public final static Color MultColor = new Color(1.00f, 0.70f, 0.70f);
 	
+	public final static Color SelectColor = new Color(0.60f, 0.60f, 1.00f);
+
 	//*******************************************************************************************
 	
 	private Const()	{}

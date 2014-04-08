@@ -1,5 +1,7 @@
 package sadsido.coolculator.game;
 
+import javax.microedition.khronos.opengles.GL10;
+
 import org.andengine.entity.modifier.ColorModifier;
 import org.andengine.entity.modifier.IEntityModifier;
 import org.andengine.entity.modifier.MoveYModifier;
@@ -77,6 +79,8 @@ public class Button extends Sprite
 		m_col    = col;
 		
 		setColor(Color.WHITE);
+		
+		setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
 				
 		m_textval = new Text(0, 0, MainActivity.instance().getButtonFont(), "xxx", pVBO);
 		m_textsig = new Text(0, 0, MainActivity.instance().getButtonFont(), "xxx", pVBO);
@@ -146,7 +150,7 @@ public class Button extends Sprite
 			new ParallelEntityModifier
 			(
 				new ScaleAtModifier(0.08f, 1.0f, 0.9f, getWidth() / 2.0f, getHeight() / 2.0f),
-				new ColorModifier(0.08f, Color.WHITE, Color.RED)
+				new ColorModifier(0.08f, Color.WHITE, Const.SelectColor)
 			),
 			new ScaleAtModifier(0.08f, 0.9f, 1.0f, getWidth() / 2.0f, getHeight() / 2.0f)
 		) 
@@ -162,7 +166,7 @@ public class Button extends Sprite
 	public void playUnselectAnimation()
 	{
 		// that's insane!
-		IEntityModifier modifier = new ColorModifier(0.3f, Color.RED, Color.WHITE) 
+		IEntityModifier modifier = new ColorModifier(0.3f, Const.SelectColor, Color.WHITE) 
 		{
 			@Override
 			protected void onModifierFinished(org.andengine.entity.IEntity pItem)
