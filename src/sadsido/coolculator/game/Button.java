@@ -33,6 +33,13 @@ public class Button extends Sprite
 	public static final int SIGN_EQUALS = 3;
 	public static final int SIGN_RESULT = 4;
 		
+	//*******************************************************************************************
+
+	public static final Color SignToColor(int sign)
+	{
+		return (sign == SIGN_MULT) ? Const.MultColor : Const.SignColor;
+	}
+
 	public static final String SignToString(int sign)
 	{
 		switch (sign)
@@ -103,6 +110,7 @@ public class Button extends Sprite
 		
 		m_textval.setText(Integer.toString(value));
 		m_textsig.setText(SignToString(sign));
+		m_textsig.setColor(SignToColor(sign));
 		
 		final float halfw = getWidth() / 2.0f;
 		final float halfh = getHeight() / 2.0f;
