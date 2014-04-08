@@ -88,7 +88,7 @@ public class GameScene extends Scene
 		{
 			Rect rc = m_layout.rcButton(colNo, rowNo);
 			
-			m_buttons[rowNo][colNo] = new Button(this, rowNo, colNo, rc.left, rc.top, rc.width(), rc.height(), m_activity.getButtonTexture(), m_activity.getVertexBufferObjectManager());
+			m_buttons[rowNo][colNo] = new Button(this, rowNo, colNo, rc, m_activity.getButtonTexture(), m_activity.getVertexBufferObjectManager());
 		
 			attachChild(m_buttons[rowNo][colNo]);
 			registerTouchArea(m_buttons[rowNo][colNo]);

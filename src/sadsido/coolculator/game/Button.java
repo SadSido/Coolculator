@@ -17,6 +17,7 @@ import org.andengine.util.modifier.ease.EaseQuadIn;
 import org.andengine.util.modifier.ease.EaseQuadOut;
 
 import sadsido.coolculator.MainActivity;
+import sadsido.coolculator.game.Layout.Rect;
 import sadsido.coolculator.scenes.GameScene;
 import android.annotation.SuppressLint;
 
@@ -48,27 +49,33 @@ public class Button extends Sprite
 	//*******************************************************************************************
 
 	private GameScene m_scene;
+	
 	private int       m_row;
 	private int       m_col;
-	private Text      m_text;
+	
 	private int       m_value;
 	private int       m_sign;
+
+	private Text      m_textval;
+	private Text      m_textsig;
 	
 	//*******************************************************************************************
 
-	public Button(GameScene scene, int row, int col, float pX, float pY, float pWidth, float pHeight, ITextureRegion region, VertexBufferObjectManager pVBO) 
+	public Button(GameScene scene, int row, int col, Rect rect, ITextureRegion region, VertexBufferObjectManager pVBO) 
 	{
-		super(pX, pY, pWidth, pHeight, region, pVBO);
+		super(rect.left, rect.top, rect.width(), rect.height(), region, pVBO);
 				
 		m_scene  = scene;
 		m_row    = row;
 		m_col    = col;
 		
 		setColor(Color.WHITE);
+				
+		m_textval = new Text(0, 0, MainActivity.instance().getButtonFont(), "xxx", pVBO);
+		m_textsig = new Text(0, 0, MainActivity.instance().getButtonFont(), "xxx", pVBO);
 		
-		
-		m_text = new Text(0, 0, MainActivity.instance().getButtonFont(), "xxx", pVBO);
-		attachChild(m_text);
+		attachChild(m_textval);
+		attachChild(m_textsig);
 	}
 	
 	//*******************************************************************************************
@@ -94,8 +101,22 @@ public class Button extends Sprite
 		m_value = value;
 		m_sign  = sign;
 		
-		String text = String.format("%d %s", m_value, SignToString(m_sign));
-		m_text.setText(text);
+		m_textval.setText(Integer.toString(value));
+		m_textsig.setText(SignToString(sign));
+		
+		final float halfw = getWidth() / 2.0f;
+		final float halfh = getHeight() / 2.0f;
+		final float space = halfw / 4.0f;
+		
+		if (sign == SIGN_RESULT)
+		{
+			m_textval.setPosition(halfw - m_textval.getWidth() / 2.0f, halfh - m_textval.getHeight() / 2.0f); 
+		}
+		else
+		{
+			m_textval.setPosition(halfw - m_textval.getWidth() - space, halfh - m_textval.getHeight() / 2.0f);
+			m_textsig.setPosition(halfw + space, halfh - m_textval.getHeight() / 2.0f);
+		}
 	}
 	
 	//*******************************************************************************************
