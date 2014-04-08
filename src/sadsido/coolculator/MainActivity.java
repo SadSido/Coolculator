@@ -35,6 +35,7 @@ public class MainActivity extends SimpleBaseGameActivity
 
 	private Camera m_camera; 
 	private Font m_menuFont;
+	private Font m_btnFont;
 	
 	private ITextureRegion m_texButton;
 	
@@ -54,6 +55,9 @@ public class MainActivity extends SimpleBaseGameActivity
 	public Font getMenuFont()
 	{ return m_menuFont; }
 	
+	public Font getButtonFont()
+	{ return m_btnFont; }
+	
 	public void setScene(Scene scene)
 	{ getEngine().setScene(scene); }
 	
@@ -72,13 +76,14 @@ public class MainActivity extends SimpleBaseGameActivity
 	@Override
 	protected void onCreateResources() 
 	{
-		m_menuFont = FontFactory.createFromAsset(getFontManager(), getTextureManager(), 512, 512, TextureOptions.BILINEAR, getAssets(), "airborne.ttf", 100, true, Color.WHITE);
+		m_menuFont = FontFactory.createFromAsset(getFontManager(), getTextureManager(), 512, 512, TextureOptions.BILINEAR, getAssets(), "inconsolata-bold.ttf", 100, true, Color.WHITE);
 		m_menuFont.load();
 		
-		BuildableBitmapTextureAtlas atlas = new BuildableBitmapTextureAtlas(getTextureManager(), 64, 64, TextureOptions.REPEATING_BILINEAR);
-        m_texButton = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(atlas, getAssets(), "button.png", 1, 1);
-        m_texButton.setTextureWidth(350.0f);
-        m_texButton.setTextureHeight(180.0f);
+		m_btnFont = FontFactory.createFromAsset(getFontManager(), getTextureManager(), 512, 512, TextureOptions.BILINEAR, getAssets(), "inconsolata-bold.ttf", 140, true, Color.WHITE);
+		m_btnFont.load();
+
+		BuildableBitmapTextureAtlas atlas = new BuildableBitmapTextureAtlas(getTextureManager(), 512, 512, TextureOptions.BILINEAR);
+        m_texButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "button.png");
         
         try 
         {

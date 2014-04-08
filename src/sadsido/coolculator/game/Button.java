@@ -36,7 +36,7 @@ public class Button extends Sprite
 	{
 		switch (sign)
 		{
-		case SIGN_MULT: return "x";
+		case SIGN_MULT: return "*";
 		case SIGN_PLUS: return "+";
 		case SIGN_MINUS: return "-";
 		case SIGN_EQUALS: return "=";
@@ -67,8 +67,7 @@ public class Button extends Sprite
 		setColor(Color.WHITE);
 		
 		
-		m_text = new Text(0, 0, MainActivity.instance().getMenuFont(), "xxx", pVBO);
-		m_text.setColor(Color.BLACK);
+		m_text = new Text(0, 0, MainActivity.instance().getButtonFont(), "xxx", pVBO);
 		attachChild(m_text);
 	}
 	
