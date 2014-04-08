@@ -71,7 +71,7 @@ public class GameScene extends Scene
 		m_animationSet = new HashSet<Button>();
 		m_gens         = new Generator[Const.Cols];
 		
-		setBackground(new Background(0.1f, 0.1f, 0.3f));
+		setBackground(new Background(0.3f, 0.3f, 0.5f));
 		
 		Rect rcTime    = m_layout.rcTimebar();
 		m_timebar      = new Timebar(this, rcTime.left, rcTime.top, rcTime.width(), rcTime.height(), m_activity.getVertexBufferObjectManager());
