@@ -51,6 +51,8 @@ public class GameScene extends Scene
 	// sprite to show score:
 	
 	private Score m_score;
+	private Score m_record;
+	
 	// private Score m_record;
 
 	// timebar to show remaining time:
@@ -103,12 +105,13 @@ public class GameScene extends Scene
 		
 		resetSelection();
 
-		// init score area:
+		// init score areas:
 		
-		m_score = new Score(0.0f, 0.0f, MainActivity.instance().getMenuFont(), 0, m_activity.getVertexBufferObjectManager());
-		m_score.setPosition((m_activity.getCamera().getWidth() - m_score.getWidth()) / 2.0f, m_activity.getCamera().getHeight() - m_score.getHeight());
+		m_score  = new Score(000, m_layout.rcScore(),  MainActivity.instance().getMenuFont(), m_activity.getVertexBufferObjectManager());
+		m_record = new Score(999, m_layout.rcRecord(), MainActivity.instance().getMenuFont(), m_activity.getVertexBufferObjectManager());
 	
 		attachChild(m_score);
+		attachChild(m_record);
 	}
 
 	//*******************************************************************************************

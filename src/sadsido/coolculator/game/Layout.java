@@ -31,6 +31,8 @@ public class Layout
 	private Rect m_rcButtons;
 	private Rect m_rcButton;
 	private Rect m_rcTimebar;
+	private Rect m_rcScore;
+	private Rect m_rcRecord;
 	
 	//*******************************************************************************************
 
@@ -40,6 +42,7 @@ public class Layout
 		m_height = camera.getHeight();
 		
 		float topBar = m_height / 6.0f;
+		float lftBar = m_width  / 5.0f; 
 		
 		m_rcButtons = new Rect(0.0f, topBar, m_width, m_height);
 		
@@ -48,8 +51,10 @@ public class Layout
 		
 		m_rcButton = new Rect(0.0f, 0.0f, m_rcButtons.width() / Const.Cols, m_rcButtons.height() / Const.Rows);
 		
-		final float delta = (topBar - 30.0f) / 2.0f;
-		m_rcTimebar = new Rect(m_rcButtons.left, delta, m_rcButtons.right, topBar - delta);
+		m_rcScore   = new Rect(0.0f, 0.0f, lftBar, topBar);
+		m_rcRecord  = new Rect(m_width - lftBar, 0.0f, m_width, topBar);
+		
+		m_rcTimebar = new Rect(m_rcScore.right, 0.0f, m_rcRecord.left, topBar);
 	}
 	
 	//*******************************************************************************************
@@ -70,6 +75,12 @@ public class Layout
 	
 	public Rect rcTimebar()
 	{ return m_rcTimebar; }
+	
+	public Rect rcScore()
+	{ return m_rcScore; }
+	
+	public Rect rcRecord()
+	{ return m_rcRecord; }
 	
 	//*******************************************************************************************
 

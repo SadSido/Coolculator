@@ -4,6 +4,8 @@ import org.andengine.entity.text.Text;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
+import sadsido.coolculator.game.Layout.Rect;
+
 public class Score extends Text
 {
 	//*******************************************************************************************
@@ -12,10 +14,15 @@ public class Score extends Text
 	
 	//*******************************************************************************************
 
-	public Score(float pX, float pY, IFont pFont, int score, VertexBufferObjectManager pVBO) 
+	public Score(int score, Rect rect, IFont pFont, VertexBufferObjectManager pVBO) 
 	{
-		super(pX, pY, pFont, formatScore(score), pVBO);
+		super(0.0f, 0.0f, pFont, formatScore(score), pVBO);
 		m_score = score;
+		
+		final float posX = (rect.width()  - getWidth())  / 2.0f;
+		final float posY = (rect.height() - getHeight()) / 2.0f;
+		
+		setPosition(rect.left + posX, rect.top + posY);
 	}
 	
 	//*******************************************************************************************
