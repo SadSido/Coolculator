@@ -199,7 +199,9 @@ public class GameScene extends Scene
 		{
 			// modify current score:
 			final int delta = m_buttons[m_selections[3]][3].value();
-			if (isEquationValid()) { m_score.inc(delta); } else { m_score.dec(delta); }
+			final int bonus = calculateBonus();
+					
+			if (isEquationValid()) { m_score.inc(delta * bonus); } else { m_score.dec(delta); }
 			
 			// must run fall animation:
 			if (firstRowSelected())
@@ -387,6 +389,16 @@ public class GameScene extends Scene
 		return result == b3.value();	
 	}
 		
+	private int calculateBonus()
+	{
+		int bonus = 1;
+		
+		if (m_buttons[m_selections[0]][0].sign() == Button.SIGN_MULT) { bonus *= 2; }
+		if (m_buttons[m_selections[1]][1].sign() == Button.SIGN_MULT) { bonus *= 2; }
+		
+		return bonus;
+	}
+	
 	public int pickSign(int col, int value)
 	{
 		// these columns have fixed sign:
