@@ -1,6 +1,7 @@
 package sadsido.coolculator.scenes;
 
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 import org.andengine.entity.scene.Scene;
@@ -60,6 +61,10 @@ public class GameScene extends Scene
 	
 	private Timebar m_timebar;
 	
+	// random stuff:
+	
+	private Random m_rand;
+	
 	//*******************************************************************************************
 
 	public GameScene()
@@ -70,6 +75,7 @@ public class GameScene extends Scene
 		m_selections   = new int[Const.Cols];
 		m_animationSet = new HashSet<Button>();
 		m_gens         = new Generator[Const.Cols];
+		m_rand         = new Random();
 		
 		setBackground(new Background(0.3f, 0.3f, 0.5f));
 		
@@ -82,12 +88,13 @@ public class GameScene extends Scene
 		// init generators:
 		
 		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
-		{ m_gens[colNo] = new Generator(colNo);	}
+		{ m_gens[colNo] = Generator.getGenerator(colNo);	}
 				
-		// init buttons:
+		// init buttons (reverse order is required
+		// to set the "results" column properly:
 		
-		for (int rowNo = 0; rowNo < Const.Rows; ++ rowNo)
-		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
+		for (int rowNo = Const.Rows - 1; rowNo >= 0; -- rowNo)
+		for (int colNo = Const.Cols - 1; colNo >= 0; -- colNo)
 		{
 			Rect rc = m_layout.rcButton(colNo, rowNo);
 			
@@ -99,7 +106,7 @@ public class GameScene extends Scene
 			// generate text for the button:
 			
 			final int val = m_gens[colNo].pickValue();
-			final int sgn = m_gens[colNo].pickSign(val);
+			final int sgn = pickSign(colNo, val);
 			
 			m_buttons[rowNo][colNo].setValueSign(val, sgn);
 		}
@@ -236,7 +243,7 @@ public class GameScene extends Scene
 				
 				gen.pushValue(btn.value());				
 				final int val = gen.pickValue();
-				final int sgn = gen.pickSign(val);
+				final int sgn = pickSign(colNo, val);
 				
 				// reuse button as a top-level one:
 				
@@ -380,5 +387,28 @@ public class GameScene extends Scene
 		return result == b3.value();	
 	}
 		
+	public int pickSign(int col, int value)
+	{
+		// these columns have fixed sign:
+		
+		if (col == 3)
+		{ return Button.SIGN_RESULT; }
+
+		if (col == 2)
+		{ return Button.SIGN_EQUALS; }
+		
+		// these columns have variations:
+		
+		if (col == 0)
+		{ return (value < 4) ? m_rand.nextInt(Button.SIGN_MINUS) : Button.SIGN_PLUS; }
+		
+		if (col == 1)
+		{ return (value < 4) ? m_rand.nextInt(Button.SIGN_EQUALS) : m_rand.nextInt(Button.SIGN_MINUS) + 1; }
+				
+		// assert this never reached:
+		
+		return Button.SIGN_RESULT;
+	}
+	
 	//*******************************************************************************************
 }

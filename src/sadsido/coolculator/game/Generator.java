@@ -11,29 +11,24 @@ public class Generator
 {
 	//*******************************************************************************************
 
-	private final int m_col;	
 	private LinkedList<Integer> m_vals;
 	private Random m_rand;
 	
 	//*******************************************************************************************
 
-	public Generator(int col)
+	public Generator(int low, int high, boolean random)
 	{
-		m_col  = col;
 		m_vals = new LinkedList<Integer>();
-		m_rand = new Random();
+		m_rand = (random) ? new Random() : null;
 		
 		// fill in the set of possible values:
 		
-		final int ceil = (col == 3) ? 21 : 10;
-		for (int value = 0; value < ceil; ++ value)
-		{
-			m_vals.add(value);
-		}
+		for (int value = low; value <= high; ++ value)
+		{ m_vals.addLast(value); }
 		
-		// shuffle the set:
+		// prepare the set:
 		
-		Collections.shuffle(m_vals, m_rand);
+		reshuffle();
 	}
 	
 	//*******************************************************************************************
@@ -43,34 +38,37 @@ public class Generator
 		return m_vals.poll();
 	}
 	
-	public int pickSign(int value)
-	{
-		// these columns have fixed sign:
-		
-		if (m_col == 3)
-		{ return Button.SIGN_RESULT; }
-
-		if (m_col == 2)
-		{ return Button.SIGN_EQUALS; }
-		
-		// these columns have variations:
-		
-		if (m_col == 0)
-		{ return (value < 4) ? m_rand.nextInt(Button.SIGN_MINUS) : Button.SIGN_PLUS; }
-		
-		if (m_col == 1)
-		{ return (value < 4) ? m_rand.nextInt(Button.SIGN_EQUALS) : m_rand.nextInt(Button.SIGN_MINUS) + 1; }
-				
-		// assert this never reached:
-		
-		return Button.SIGN_RESULT;
-	}
-	
 	public void pushValue(int value)
 	{
-		m_vals.add(value);
-		Collections.shuffle(m_vals, m_rand);
+		m_vals.addLast(value);
+		
+		// keep the stuff shuffled:
+		
+		reshuffle();
 	}
 	
 	//*******************************************************************************************
+	
+	private void reshuffle()
+	{ 
+		if (m_rand != null) 
+		{ Collections.shuffle(m_vals, m_rand); } 
+	}
+	
+	//*******************************************************************************************
+
+	public static Generator getGenerator(int column)
+	{
+		switch (column)
+		{
+		case (Const.Cols - 1): return new Generator(1, 20, false);
+		case (Const.Cols - 2): return new Generator(0, 7, true);
+		}
+		
+		// otherwise random digit:
+		return new Generator(0, 9, true);
+	}
+
+	//*******************************************************************************************
+
 }
