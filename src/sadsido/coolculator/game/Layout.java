@@ -45,7 +45,7 @@ public class Layout
 		m_rcScreen = new Rect(0.0f, 0.0f, m_width, m_height);
 		
 		float topBar = m_height / 7.0f;
-		float lftBar = m_width  / 5.0f; 
+		float lftBar = m_width  / 4.0f; 
 		
 		m_rcButtons = new Rect(0.0f, topBar, m_width, m_height);
 		

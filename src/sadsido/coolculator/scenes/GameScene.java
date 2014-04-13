@@ -4,7 +4,9 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+import org.andengine.entity.IEntity;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.util.color.Color;
 
@@ -124,8 +126,8 @@ public class GameScene extends Scene
 
 		// init score areas:
 		
-		m_score  = new Score(000, m_layout.rcScore(),  MainActivity.instance().getMenuFont(), m_activity.getVertexBufferObjectManager());
-		m_record = new Score(999, m_layout.rcRecord(), MainActivity.instance().getMenuFont(), m_activity.getVertexBufferObjectManager());
+		m_score  = new Score(000, m_layout.rcScore(),  Score.Align.Left,  m_activity.getMenuFont(), m_activity.getScoreTexture(),  m_activity.getVertexBufferObjectManager());
+		m_record = new Score(999, m_layout.rcRecord(), Score.Align.Right, m_activity.getMenuFont(), m_activity.getRecordTexture(), m_activity.getVertexBufferObjectManager());
 	
 		attachChild(m_score);
 		attachChild(m_record);
