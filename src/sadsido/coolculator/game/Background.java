@@ -41,7 +41,7 @@ public class Background extends Rectangle
 	
 	public void animateScoreChange(int newScore)
 	{
-		final int factor = 10;
+		final int factor = 100;
 		final int index  = (newScore / factor) % Const.BackgroundColors.length;
 		
 		if (index != m_index)
