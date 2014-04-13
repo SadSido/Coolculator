@@ -27,6 +27,9 @@ public class Score extends Text
 	
 	//*******************************************************************************************
 
+	public int getScore()
+	{ return m_score; }
+	
 	public void inc(int value)
 	{
 		m_score = m_score + value;

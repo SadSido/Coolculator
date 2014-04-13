@@ -28,6 +28,7 @@ public class Layout
 	private final float m_width;
 	private final float m_height;
 
+	private Rect m_rcScreen;
 	private Rect m_rcButtons;
 	private Rect m_rcButton;
 	private Rect m_rcTimebar;
@@ -40,6 +41,8 @@ public class Layout
 	{
 		m_width  = camera.getWidth();
 		m_height = camera.getHeight();
+		
+		m_rcScreen = new Rect(0.0f, 0.0f, m_width, m_height);
 		
 		float topBar = m_height / 7.0f;
 		float lftBar = m_width  / 5.0f; 
@@ -81,6 +84,9 @@ public class Layout
 	
 	public Rect rcRecord()
 	{ return m_rcRecord; }
+	
+	public Rect rcScreen()
+	{ return m_rcScreen; }
 	
 	//*******************************************************************************************
 

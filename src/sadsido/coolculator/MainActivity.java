@@ -38,6 +38,7 @@ public class MainActivity extends SimpleBaseGameActivity
 	private Font m_btnFont;
 	
 	private ITextureRegion m_texButton;
+	private ITextureRegion m_texBackgr;
 	
 	//*******************************************************************************************
 	
@@ -63,6 +64,9 @@ public class MainActivity extends SimpleBaseGameActivity
 	
 	public ITextureRegion getButtonTexture()
 	{ return m_texButton; }
+
+	public ITextureRegion getBackgroundTexture()
+	{ return m_texBackgr; }
 	
 	//*******************************************************************************************
 
@@ -84,6 +88,7 @@ public class MainActivity extends SimpleBaseGameActivity
 
 		BuildableBitmapTextureAtlas atlas = new BuildableBitmapTextureAtlas(getTextureManager(), 512, 512, TextureOptions.BILINEAR);
         m_texButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "button.png");
+        m_texBackgr = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "background.png");
         
         try 
         {

@@ -5,11 +5,11 @@ import java.util.Random;
 import java.util.Set;
 
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.text.Text;
 import org.andengine.util.color.Color;
 
 import sadsido.coolculator.MainActivity;
+import sadsido.coolculator.game.Background;
 import sadsido.coolculator.game.Button;
 import sadsido.coolculator.game.Const;
 import sadsido.coolculator.game.Generator;
@@ -55,7 +55,9 @@ public class GameScene extends Scene
 	private Score m_score;
 	private Score m_record;
 	
-	// private Score m_record;
+	// background of variable color:
+	
+	private Background m_back;
 
 	// timebar to show remaining time:
 	
@@ -77,10 +79,15 @@ public class GameScene extends Scene
 		m_gens         = new Generator[Const.Cols];
 		m_rand         = new Random();
 		
-		setBackground(new Background(0.3f, 0.3f, 0.5f));
+		// init background:
+		
+		m_back = new Background(m_layout.rcScreen(), m_activity.getBackgroundTexture(), m_activity.getVertexBufferObjectManager());
+		attachChild(m_back);
+		
+		// init timebar:
 		
 		Rect rcTime    = m_layout.rcTimebar();
-		m_timebar      = new Timebar(this, rcTime.left, rcTime.top, rcTime.width(), rcTime.height(), m_activity.getVertexBufferObjectManager());
+		m_timebar      = new Timebar(this, rcTime, m_activity.getVertexBufferObjectManager());
 
 		attachChild(m_timebar);
 		m_timebar.playTimeoutAnimation();
@@ -202,6 +209,7 @@ public class GameScene extends Scene
 			final int bonus = calculateBonus();
 					
 			if (isEquationValid()) { m_score.inc(delta * bonus); } else { m_score.dec(delta); }
+			m_back.animateScoreChange(m_score.getScore());
 			
 			// must run fall animation:
 			if (firstRowSelected())
