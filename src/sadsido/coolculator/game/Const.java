@@ -18,15 +18,15 @@ public class Const
 	
 	// colors of the buttons:
 	
-	public final static Color SelectColor = new Color(0.60f, 0.60f, 1.00f);
+	public final static Color SelectColor = new Color(0.30f, 0.30f, 0.30f);
 
 	// background colors:
 	
 	public final static Color[] BackgroundColors = new Color[] 
 	{
-		new Color(0.10f, 0.10f, 0.30f),
-		new Color(0.10f, 0.30f, 0.10f),
-		new Color(0.30f, 0.10f, 0.10f)		
+		new Color(0.30f, 0.30f, 0.50f),
+		new Color(0.30f, 0.50f, 0.30f),
+		new Color(0.50f, 0.30f, 0.30f)		
 	};
 	
 	//*******************************************************************************************
