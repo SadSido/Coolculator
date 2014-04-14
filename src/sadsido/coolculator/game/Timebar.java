@@ -1,8 +1,13 @@
 package sadsido.coolculator.game;
 
+import javax.microedition.khronos.opengles.GL10;
+
+import org.andengine.entity.Entity;
 import org.andengine.entity.modifier.IEntityModifier;
 import org.andengine.entity.modifier.ScaleAtModifier;
 import org.andengine.entity.primitive.Rectangle;
+import org.andengine.entity.sprite.Sprite;
+import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.Color;
 
@@ -11,37 +16,36 @@ import sadsido.coolculator.scenes.GameScene;
 
 
 
-public class Timebar extends Rectangle
+public class Timebar extends Entity
 {
 	//*******************************************************************************************
 
 	private GameScene m_scene;
 	
 	private Rectangle m_topBar;
-	private Rectangle m_botBar;
+	private Sprite m_botBar;
 	
 	//*******************************************************************************************
 
-	public Timebar(GameScene scene, Rect rect, VertexBufferObjectManager pVBO) 
+	public Timebar(GameScene scene, Rect rect, ITextureRegion region, VertexBufferObjectManager pVBO) 
 	{
-		super(rect.left, rect.top, rect.width(), rect.height(), pVBO);
-		
 		m_scene  = scene;	
-		m_topBar = new Rectangle(0.0f, 0.0f, rect.width(), rect.height(), pVBO);
-		m_botBar = new Rectangle(0.0f, 0.0f, rect.width(), rect.height(), pVBO);
 		
+		m_topBar = new Rectangle(0.0f, 0.0f, rect.width(), rect.height(), pVBO);
+		m_botBar = new Sprite(0.0f, 0.0f, rect.width(), rect.height(), region, pVBO);
+
 		attachChild(m_botBar);
 		attachChild(m_topBar);
-		
-		m_topBar.setColor(Color.RED);
-		m_botBar.setColor(Color.WHITE);
+
+		// align root entity:
+		setPosition(rect.left, rect.top);
 	}
 
 	//*******************************************************************************************
 
 	public void playTimeoutAnimation()
 	{
-		IEntityModifier modifier = new ScaleAtModifier(60.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, getHeight() / 2.0f) 
+		IEntityModifier modifier = new ScaleAtModifier(60.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, m_botBar.getHeight() / 2.0f) 
 		{
 			@Override
 			protected void onModifierFinished(org.andengine.entity.IEntity pItem)
@@ -55,7 +59,7 @@ public class Timebar extends Rectangle
 	{
 		m_topBar.clearEntityModifiers();
 		
-		IEntityModifier modifier = new ScaleAtModifier(0.3f, m_topBar.getScaleX(), 1.0f, 1.0f, 1.0f, 0.0f, getHeight() / 2.0f) 
+		IEntityModifier modifier = new ScaleAtModifier(0.3f, m_topBar.getScaleX(), 1.0f, 1.0f, 1.0f, 0.0f, m_botBar.getHeight() / 2.0f) 
 		{
 			@Override
 			protected void onModifierFinished(org.andengine.entity.IEntity pItem)

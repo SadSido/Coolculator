@@ -89,7 +89,7 @@ public class GameScene extends Scene
 		// init timebar:
 		
 		Rect rcTime    = m_layout.rcTimebar();
-		m_timebar      = new Timebar(this, rcTime, m_activity.getVertexBufferObjectManager());
+		m_timebar      = new Timebar(this, rcTime, m_activity.getTimebarTexture(), m_activity.getVertexBufferObjectManager());
 
 		attachChild(m_timebar);
 		m_timebar.playTimeoutAnimation();

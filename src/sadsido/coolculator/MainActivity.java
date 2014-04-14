@@ -34,6 +34,7 @@ public class MainActivity extends SimpleBaseGameActivity
 	//*******************************************************************************************
 
 	private Camera m_camera; 
+	
 	private Font m_menuFont;
 	private Font m_btnFont;
 	
@@ -41,6 +42,7 @@ public class MainActivity extends SimpleBaseGameActivity
 	private ITextureRegion m_texBackgr;
 	private ITextureRegion m_texScore;
 	private ITextureRegion m_texRecord;
+	private ITextureRegion m_texTimebar;
 	
 	//*******************************************************************************************
 	
@@ -75,6 +77,9 @@ public class MainActivity extends SimpleBaseGameActivity
 	
 	public ITextureRegion getRecordTexture()
 	{ return m_texRecord; }
+
+	public ITextureRegion getTimebarTexture()
+	{ return m_texTimebar; }
 	
 	//*******************************************************************************************
 
@@ -88,34 +93,63 @@ public class MainActivity extends SimpleBaseGameActivity
 	@Override
 	protected void onCreateResources() 
 	{
+		// prepare fonts:
+		
 		m_menuFont = FontFactory.createFromAsset(getFontManager(), getTextureManager(), 512, 512, TextureOptions.BILINEAR, getAssets(), "inconsolata-bold.ttf", 100, true, Color.WHITE);
 		m_menuFont.load();
 		
 		m_btnFont = FontFactory.createFromAsset(getFontManager(), getTextureManager(), 512, 512, TextureOptions.BILINEAR, getAssets(), "inconsolata-bold.ttf", 140, true, Color.WHITE);
 		m_btnFont.load();
 
-		BuildableBitmapTextureAtlas atlas = new BuildableBitmapTextureAtlas(getTextureManager(), 512, 512, TextureOptions.BILINEAR);
-        
-		m_texButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "button.png");
-        m_texBackgr = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "background.png");
-        m_texScore  = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "score.png");
-        m_texRecord = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "record.png");
-        
-        try 
-        {
-            atlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
-            atlas.load();
-        } 
-        catch (TextureAtlasBuilderException e) 
-        {
-            e.printStackTrace();
-        }	
+		// prepare textures:
+		
+		try
+		{
+			loadBilinearTextures();
+			loadRepeatingTextures();
+		}
+		catch (TextureAtlasBuilderException ex)
+		{
+			ex.printStackTrace();
+		}
 	}
 
 	@Override
 	protected Scene onCreateScene() 
 	{
 		return new SplashScene();
+	}
+
+	//*******************************************************************************************
+	
+	private void loadBilinearTextures() throws TextureAtlasBuilderException
+	{
+		BuildableBitmapTextureAtlas atlas = new BuildableBitmapTextureAtlas(getTextureManager(), 512, 512, TextureOptions.BILINEAR);
+        
+		m_texButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "button.png");
+        m_texScore  = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "score.png");
+        m_texRecord = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "record.png");
+        
+        atlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
+        atlas.load();
+	}
+	
+	private void loadRepeatingTextures() throws TextureAtlasBuilderException
+	{
+		BuildableBitmapTextureAtlas atlas1 = new BuildableBitmapTextureAtlas(getTextureManager(),  64,  16, TextureOptions.REPEATING_BILINEAR);
+		BuildableBitmapTextureAtlas atlas2 = new BuildableBitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.REPEATING_BILINEAR);
+	
+		m_texTimebar = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas1, getAssets(), "timebar.png");
+        m_texBackgr  = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas2, getAssets(), "background.png");
+
+        m_texTimebar.setTextureSize(200.0f, 200.0f);
+        m_texBackgr.setTextureSize(m_camera.getWidth(), m_camera.getHeight());
+
+		atlas1.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
+        atlas1.load();
+        
+		atlas2.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
+        atlas2.load();
 	}
 
 	//*******************************************************************************************
