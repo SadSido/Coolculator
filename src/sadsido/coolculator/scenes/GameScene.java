@@ -54,6 +54,7 @@ public class GameScene extends Scene
 	
 	// sprite to show score:
 	
+	private int   m_goal;
 	private Score m_score;
 	private Score m_record;
 	
@@ -68,6 +69,7 @@ public class GameScene extends Scene
 	// random stuff:
 	
 	private Random m_rand;
+	
 	
 	//*******************************************************************************************
 
@@ -88,11 +90,8 @@ public class GameScene extends Scene
 		
 		// init timebar:
 		
-		Rect rcTime    = m_layout.rcTimebar();
-		m_timebar      = new Timebar(this, rcTime, m_activity.getTimebarTexture(), m_activity.getVertexBufferObjectManager());
-
+		m_timebar      = new Timebar(this, m_layout.rcTimebar(), m_activity.getTimebarTexture(), m_activity.getVertexBufferObjectManager());
 		attachChild(m_timebar);
-		m_timebar.playTimeoutAnimation();
 		
 		// init generators:
 		
@@ -126,11 +125,16 @@ public class GameScene extends Scene
 
 		// init score areas:
 		
+		m_goal   = Const.ScoreGoal;
 		m_score  = new Score(000, m_layout.rcScore(),  Score.Align.Left,  m_activity.getMenuFont(), m_activity.getScoreTexture(),  m_activity.getVertexBufferObjectManager());
 		m_record = new Score(999, m_layout.rcRecord(), Score.Align.Right, m_activity.getMenuFont(), m_activity.getRecordTexture(), m_activity.getVertexBufferObjectManager());
 	
 		attachChild(m_score);
 		attachChild(m_record);
+		
+		// run the timer:
+		
+		onResetAnimationFinished();
 	}
 
 	//*******************************************************************************************
@@ -184,9 +188,6 @@ public class GameScene extends Scene
 		
 		if (hasFullSelection())
 		{
-			// reset timebar anyway:
-			m_timebar.playResetAnimation();
-			
 			// vanish selected buttons:
 			for (int colNo = 0; colNo < Const.Cols; ++ colNo)
 			{ 
@@ -206,12 +207,27 @@ public class GameScene extends Scene
 		
 		if (!hasAnimation())
 		{
+			final boolean isValid = isEquationValid();
+
 			// modify current score:
+			
 			final int delta = m_buttons[m_selections[3]][3].value();
-			final int bonus = calculateBonus();
-					
-			if (isEquationValid()) { m_score.inc(delta * bonus); } else { m_score.dec(delta); }
-			m_back.animateScoreChange(m_score.getScore());
+			final int bonus = (isValid) ? calculateBonus() : 1;
+			final int sign  = (isValid) ? +1 : -1; 
+				
+			m_score.change(sign * bonus * delta);
+			
+			// check, whether we reached new level:
+			if (m_score.score() >= m_goal)
+			{
+				// calculate new level params:
+				m_goal = (m_score.level() + 1) * Const.ScoreGoal;
+
+				// some important animation:
+				m_back.playLevelAnimation(m_score.level());
+				m_timebar.playResetAnimation();
+				
+			}
 			
 			// must run fall animation:
 			if (firstRowSelected())
@@ -300,9 +316,6 @@ public class GameScene extends Scene
 			
 			// reset current selection:
 			resetSelection();
-			
-			// restart timebar:
-			m_timebar.playTimeoutAnimation();
 		}
 	}
 	
@@ -333,6 +346,13 @@ public class GameScene extends Scene
 			m_buttons[rowNo][colNo].clearEntityModifiers();
 			m_buttons[rowNo][colNo].playEndgameAnimation((rowNo + colNo) * 0.1f);
 		}		
+	}
+	
+	public void onResetAnimationFinished()
+	{
+		// must set timeout for the new level:
+		final float time = Const.StartTime * (float) Math.pow(Const.TimeFactor, m_score.level());
+		m_timebar.playTimeoutAnimation(time);
 	}
 	
 	//*******************************************************************************************

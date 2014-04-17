@@ -18,6 +18,7 @@ public class Score extends Entity
 	//*******************************************************************************************
 
 	private int    m_score;
+	private int    m_level;
 	private Text   m_text;
 	private Sprite m_icon;
 	
@@ -26,6 +27,8 @@ public class Score extends Entity
 	public Score(int score, Rect rect, Align align, IFont pFont, ITextureRegion texIcon, VertexBufferObjectManager pVBO) 
 	{
 		m_score = score;
+		m_level = score / Const.ScoreGoal;
+		
 		m_text  = new Text(0.0f, 0.0f, pFont, formatScore(score), pVBO);
 		m_icon  = new Sprite(0.0f, 0.0f, 1.5f * m_text.getHeight(), m_text.getHeight(), texIcon, pVBO);
 		
@@ -51,18 +54,17 @@ public class Score extends Entity
 	
 	//*******************************************************************************************
 
-	public int getScore()
+	public int score()
 	{ return m_score; }
 	
-	public void inc(int value)
+	public int level()
+	{ return m_level; }
+	
+	public void change(int delta)
 	{
-		m_score = m_score + value;
-		m_text.setText(formatScore(m_score));
-	}
-
-	public void dec(int value)
-	{
-		m_score = Math.max(m_score - value, 0);
+		m_score = Math.max(m_score + delta, 0);
+		m_level = m_score / Const.ScoreGoal;
+		
 		m_text.setText(formatScore(m_score));
 	}
 	

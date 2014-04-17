@@ -43,9 +43,9 @@ public class Timebar extends Entity
 
 	//*******************************************************************************************
 
-	public void playTimeoutAnimation()
+	public void playTimeoutAnimation(float time)
 	{
-		IEntityModifier modifier = new ScaleAtModifier(60.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, m_botBar.getHeight() / 2.0f) 
+		IEntityModifier modifier = new ScaleAtModifier(time, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, m_botBar.getHeight() / 2.0f) 
 		{
 			@Override
 			protected void onModifierFinished(org.andengine.entity.IEntity pItem)
@@ -63,7 +63,7 @@ public class Timebar extends Entity
 		{
 			@Override
 			protected void onModifierFinished(org.andengine.entity.IEntity pItem)
-			{  };
+			{ m_scene.onResetAnimationFinished(); };
 		};
 		
 		m_topBar.registerEntityModifier(modifier);

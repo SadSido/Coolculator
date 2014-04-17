@@ -32,6 +32,12 @@ public class Const
 		new Color(0.20f, 0.35f, 0.35f)		
 	};
 	
+	// level timing:
+	
+	public final static int   ScoreGoal  = 100;
+	public final static float StartTime  = 6.0f * 60.0f;
+	public final static float TimeFactor = 0.9f;
+	
 	//*******************************************************************************************
 	
 	private Const()	{}
