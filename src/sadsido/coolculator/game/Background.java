@@ -23,6 +23,7 @@ public class Background extends Rectangle
 
 	private Sprite m_blend;
 	private int m_level;
+	private int m_index;
 	
 	//*******************************************************************************************
 		
@@ -40,6 +41,8 @@ public class Background extends Rectangle
 		// set initial score & color:
 		
 		m_level = 0;
+		m_index = 0;
+		
 		setColor(Const.BackgroundColors[m_level]);
 	}
 
@@ -50,11 +53,12 @@ public class Background extends Rectangle
 		if (level != m_level)
 		{
 			m_level = level;
+			m_index = level % Const.BackgroundColors.length;
 						
 			IEntityModifier modifier = new SequenceEntityModifier
 			(
 				new ColorModifier(0.3f, getColor(), Color.BLACK),
-				new ColorModifier(0.3f, Color.BLACK, Const.BackgroundColors[m_level])
+				new ColorModifier(0.3f, Color.BLACK, Const.BackgroundColors[m_index])
 			); 
 			
 			registerEntityModifier(modifier);		
