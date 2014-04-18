@@ -230,7 +230,7 @@ public class GameScene extends Scene
 			}
 			
 			// must run fall animation:
-			if (firstRowSelected())
+			if ((m_selections[0] == 0) && singleRowSelected())
 			{
 				// no falling animation required:
 				onFallingAnimationFinished(null);
@@ -378,10 +378,12 @@ public class GameScene extends Scene
 		return true;
 	}
 	
-	private boolean firstRowSelected()
+	private boolean singleRowSelected()
 	{
+		final int first = m_selections[0];
+		
 		for (int index : m_selections)
-		{ if (index != 0) return false; }
+		{ if (index != first) return false; }
 		
 		return true;
 	}
@@ -425,6 +427,7 @@ public class GameScene extends Scene
 		
 		if (m_buttons[m_selections[0]][0].sign() == Button.SIGN_MULT) { bonus *= 2; }
 		if (m_buttons[m_selections[1]][1].sign() == Button.SIGN_MULT) { bonus *= 2; }
+		if (singleRowSelected()) { bonus *= 2; }
 		
 		return bonus;
 	}
