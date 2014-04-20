@@ -18,8 +18,8 @@ import sadsido.coolculator.game.Layout;
 import sadsido.coolculator.game.Layout.Rect;
 import sadsido.coolculator.game.Score;
 import sadsido.coolculator.game.Timebar;
-import sadsido.coolculator.gens.RandGenerator;
-import sadsido.coolculator.gens.ValueGenerator;
+import sadsido.coolculator.pick.RndValuePicker;
+import sadsido.coolculator.pick.ValuePicker;
 
 
 
@@ -51,7 +51,7 @@ public class GameScene extends Scene
 	
 	// set of available digits to generate:
 	
-	private ValueGenerator[] m_gens;
+	private ValuePicker[] m_gens;
 	
 	// sprite to show score:
 	
@@ -81,7 +81,7 @@ public class GameScene extends Scene
 		m_buttons      = new Button[Const.Rows][Const.Cols];
 		m_selections   = new int[Const.Cols];
 		m_animationSet = new HashSet<Button>();
-		m_gens         = new ValueGenerator[Const.Cols];
+		m_gens         = new ValuePicker[Const.Cols];
 		m_rand         = new Random();
 		
 		// init background:
@@ -97,7 +97,7 @@ public class GameScene extends Scene
 		// init generators:
 		
 		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
-		{ m_gens[colNo] = ValueGenerator.create(colNo);	}
+		{ m_gens[colNo] = ValuePicker.create(colNo);	}
 				
 		// init buttons (reverse order is required
 		// to set the "results" column properly:
@@ -266,7 +266,7 @@ public class GameScene extends Scene
 			for (int colNo = 0; colNo < Const.Cols; ++ colNo)
 			{
 				final Button         btn = m_buttons[m_selections[colNo]][colNo];
-				final ValueGenerator gen = m_gens[colNo];
+				final ValuePicker gen = m_gens[colNo];
 				
 				// get new value for the button:
 				

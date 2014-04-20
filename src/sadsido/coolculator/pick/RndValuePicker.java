@@ -1,4 +1,4 @@
-package sadsido.coolculator.gens;
+package sadsido.coolculator.pick;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -8,7 +8,7 @@ import java.util.Random;
 
 // a class for encapsulating randomizer logic when creating the buttons:
 
-public class RandGenerator extends ValueGenerator
+public class RndValuePicker extends ValuePicker
 {
 	//*******************************************************************************************
 
@@ -17,7 +17,7 @@ public class RandGenerator extends ValueGenerator
 	
 	//*******************************************************************************************
 
-	public RandGenerator(int min, int max)
+	public RndValuePicker(int min, int max)
 	{
 		m_vals = new LinkedList<Integer>();
 		m_rand = new Random();
