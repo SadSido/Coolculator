@@ -1,7 +1,6 @@
 package sadsido.coolculator.game;
 
 import javax.microedition.khronos.opengles.GL10;
-
 import org.andengine.entity.modifier.ColorModifier;
 import org.andengine.entity.modifier.IEntityModifier;
 import org.andengine.entity.modifier.MoveYModifier;
@@ -17,44 +16,14 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.Color;
 import org.andengine.util.modifier.ease.EaseQuadIn;
 import org.andengine.util.modifier.ease.EaseQuadOut;
-
 import sadsido.coolculator.MainActivity;
 import sadsido.coolculator.game.Layout.Rect;
 import sadsido.coolculator.scenes.GameScene;
-import android.annotation.SuppressLint;
 
 
 
 public class Button extends Sprite
 {
-	//*******************************************************************************************
-
-	public static final int SIGN_MULT   = 0;
-	public static final int SIGN_PLUS   = 1;
-	public static final int SIGN_MINUS  = 2;
-	public static final int SIGN_EQUALS = 3;
-	public static final int SIGN_RESULT = 4;
-		
-	//*******************************************************************************************
-
-	public static final Color SignToColor(int sign)
-	{
-		return (sign == SIGN_MULT) ? Const.MultColor : Const.SignColor;
-	}
-
-	public static final String SignToString(int sign)
-	{
-		switch (sign)
-		{
-		case SIGN_MULT: return "*";
-		case SIGN_PLUS: return "+";
-		case SIGN_MINUS: return "-";
-		case SIGN_EQUALS: return "=";
-		}
-		
-		return "";
-	}
-	
 	//*******************************************************************************************
 
 	private GameScene m_scene;
@@ -63,7 +32,7 @@ public class Button extends Sprite
 	private int       m_col;
 	
 	private int       m_value;
-	private int       m_sign;
+	private Sign      m_sign;
 
 	private Text      m_textval;
 	private Text      m_textsig;
@@ -100,27 +69,26 @@ public class Button extends Sprite
 	public int value()
 	{ return m_value; }
 	
-	public int sign()
+	public Sign sign()
 	{ return m_sign; }
 	
 	public void setRowCol(int row, int col)
 	{ m_row = row; m_col = col; }
 	
-	@SuppressLint("DefaultLocale")
-	public void setValueSign(int value, int sign)
+	public void setValueSign(int value, Sign sign)
 	{
 		m_value = value;
 		m_sign  = sign;
 		
 		m_textval.setText(Integer.toString(value));
-		m_textsig.setText(SignToString(sign));
-		m_textsig.setColor(SignToColor(sign));
+		m_textsig.setText(sign.getText());
+		m_textsig.setColor(sign.getColor());
 		
 		final float halfw = getWidth() / 2.0f;
 		final float halfh = getHeight() / 2.0f;
 		final float space = halfw / 4.0f;
 		
-		if (sign == SIGN_RESULT)
+		if (sign == Sign.None)
 		{
 			m_textval.setPosition(halfw - m_textval.getWidth() / 2.0f, halfh - m_textval.getHeight() / 2.0f); 
 		}

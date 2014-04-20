@@ -17,8 +17,10 @@ import sadsido.coolculator.game.Const;
 import sadsido.coolculator.game.Layout;
 import sadsido.coolculator.game.Layout.Rect;
 import sadsido.coolculator.game.Score;
+import sadsido.coolculator.game.Sign;
 import sadsido.coolculator.game.Timebar;
 import sadsido.coolculator.pick.RndValuePicker;
+import sadsido.coolculator.pick.SignPicker;
 import sadsido.coolculator.pick.ValuePicker;
 
 
@@ -51,7 +53,8 @@ public class GameScene extends Scene
 	
 	// set of available digits to generate:
 	
-	private ValuePicker[] m_gens;
+	private ValuePicker [] m_vpick;
+	private SignPicker  [] m_spick;
 	
 	// sprite to show score:
 	
@@ -66,11 +69,7 @@ public class GameScene extends Scene
 	// timebar to show remaining time:
 	
 	private Timebar m_timebar;
-	
-	// random stuff:
-	
-	private Random m_rand;
-	
+		
 	
 	//*******************************************************************************************
 
@@ -81,8 +80,8 @@ public class GameScene extends Scene
 		m_buttons      = new Button[Const.Rows][Const.Cols];
 		m_selections   = new int[Const.Cols];
 		m_animationSet = new HashSet<Button>();
-		m_gens         = new ValuePicker[Const.Cols];
-		m_rand         = new Random();
+		m_vpick         = new ValuePicker[Const.Cols];
+		m_spick         = new SignPicker[Const.Cols];
 		
 		// init background:
 		
@@ -97,7 +96,10 @@ public class GameScene extends Scene
 		// init generators:
 		
 		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
-		{ m_gens[colNo] = ValuePicker.create(colNo);	}
+		{ 
+			m_vpick[colNo] = ValuePicker.create(colNo);	
+			m_spick[colNo] = SignPicker.create(colNo);	
+		}
 				
 		// init buttons (reverse order is required
 		// to set the "results" column properly:
@@ -114,8 +116,8 @@ public class GameScene extends Scene
 			
 			// generate text for the button:
 			
-			final int val = m_gens[colNo].pickValue();
-			final int sgn = pickSign(colNo, val);
+			final int  val = m_vpick[colNo].pickValue();
+			final Sign sgn = m_spick[colNo].pickSign(val);
 			
 			m_buttons[rowNo][colNo].setValueSign(val, sgn);
 		}
@@ -265,14 +267,14 @@ public class GameScene extends Scene
 		{
 			for (int colNo = 0; colNo < Const.Cols; ++ colNo)
 			{
-				final Button         btn = m_buttons[m_selections[colNo]][colNo];
-				final ValuePicker gen = m_gens[colNo];
+				final Button btn = m_buttons[m_selections[colNo]][colNo];
 				
 				// get new value for the button:
 				
-				gen.pushValue(btn.value());				
-				final int val = gen.pickValue();
-				final int sgn = pickSign(colNo, val);
+				m_vpick[colNo].pushValue(btn.value());				
+				
+				final int  val = m_vpick[colNo].pickValue();
+				final Sign sgn = m_spick[colNo].pickSign(val);
 				
 				// reuse button as a top-level one:
 				
@@ -388,19 +390,7 @@ public class GameScene extends Scene
 		
 		return true;
 	}
-	
-	private int applySign(int lval, int sign, int rval)
-	{
-		switch (sign)
-		{
-		case Button.SIGN_MULT:  return lval * rval;
-		case Button.SIGN_PLUS:  return lval + rval;
-		case Button.SIGN_MINUS: return lval - rval;
-		}
 		
-		return 0;
-	}
-	
 	private boolean isEquationValid()
 	{
 		if (!hasFullSelection())
@@ -413,9 +403,9 @@ public class GameScene extends Scene
 		
 		// here operator priority affects evaluation:
 		
-		final int result = (b1.sign() == Button.SIGN_MULT)
-				? applySign(b0.value(), b0.sign(), applySign(b1.value(), b1.sign(), b2.value()))
-				: applySign(applySign(b0.value(), b0.sign(), b1.value()), b1.sign(), b2.value());
+		final int result = (b1.sign() == Sign.Multiply)
+				? b0.sign().apply(b0.value(), b1.sign().apply(b1.value(), b2.value()))
+				: b1.sign().apply(b0.sign().apply(b0.value(), b1.value()), b2.value());
 				
 		// do we match the result?
 				
@@ -426,34 +416,11 @@ public class GameScene extends Scene
 	{
 		int bonus = 1;
 		
-		if (m_buttons[m_selections[0]][0].sign() == Button.SIGN_MULT) { bonus *= 2; }
-		if (m_buttons[m_selections[1]][1].sign() == Button.SIGN_MULT) { bonus *= 2; }
+		if (m_buttons[m_selections[0]][0].sign() == Sign.Multiply) { bonus *= 2; }
+		if (m_buttons[m_selections[1]][1].sign() == Sign.Multiply) { bonus *= 2; }
 		if (singleRowSelected()) { bonus *= 2; }
 		
 		return bonus;
-	}
-	
-	public int pickSign(int col, int value)
-	{
-		// these columns have fixed sign:
-		
-		if (col == 3)
-		{ return Button.SIGN_RESULT; }
-
-		if (col == 2)
-		{ return Button.SIGN_EQUALS; }
-		
-		// these columns have variations:
-		
-		if (col == 0)
-		{ return (value < 4) ? m_rand.nextInt(Button.SIGN_MINUS) : Button.SIGN_PLUS; }
-		
-		if (col == 1)
-		{ return (value < 4) ? m_rand.nextInt(Button.SIGN_EQUALS) : m_rand.nextInt(Button.SIGN_MINUS) + 1; }
-				
-		// assert this never reached:
-		
-		return Button.SIGN_RESULT;
 	}
 	
 	//*******************************************************************************************
