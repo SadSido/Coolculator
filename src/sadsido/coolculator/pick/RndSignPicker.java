@@ -20,7 +20,7 @@ public class RndSignPicker extends SignPicker
 	@Override 
 	public Sign pickSign(int value) 
 	{ 
-		m_last = (value < 4) ? pickFrom(m_nominus, m_last) : pickFrom(m_nomult, m_last);
+		m_last = (value < 4) ? pickFrom(m_nominus, m_last) : (value > 7) ? pickFrom(m_nomult, m_last) : Sign.Plus;
 		return m_last;
 	}
 

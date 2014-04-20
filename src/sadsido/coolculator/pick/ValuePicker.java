@@ -29,7 +29,7 @@ public abstract class ValuePicker
 	
 	private static ValuePicker LinearPicker = new ValuePicker()
 	{
-		private static final int min = 01;
+		private static final int min = 05;
 		private static final int max = 20;
 		private int m_next = min;
 		
