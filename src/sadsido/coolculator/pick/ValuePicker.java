@@ -17,7 +17,7 @@ public abstract class ValuePicker
 	{
 		switch (column)
 		{
-		case (Const.Cols - 1): return LinearPicker;
+		case (Const.Cols - 1): return createLinearPicker();
 		case (Const.Cols - 2): return new RndValuePicker(0, 06);
 		}
 		
@@ -27,16 +27,19 @@ public abstract class ValuePicker
 	
 	//*******************************************************************************************
 	
-	private static ValuePicker LinearPicker = new ValuePicker()
+	private static ValuePicker createLinearPicker()
 	{
-		private static final int min = 05;
-		private static final int max = 20;
-		private int m_next = min;
-		
-		@Override public int pickValue() { final int res = m_next; m_next = (m_next == max) ? min : m_next + 1; return res; }
-		@Override public void pushValue(int value) {}
-		
-	};
+		return new ValuePicker()
+		{
+			private static final int min = 05;
+			private static final int max = 20;
+			private int m_next = min;
+			
+			@Override public int pickValue() { final int res = m_next; m_next = (m_next == max) ? min : m_next + 1; return res; }
+			@Override public void pushValue(int value) {}
+			
+		};
+	}
 	
 	//*******************************************************************************************
 }
