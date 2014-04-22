@@ -37,7 +37,7 @@ public class Const
 	
 	public final static int   ScoreGoal  = 100;
 	public final static float StartTime  = 5.0f * 60.0f;
-	public final static float TimeFactor = 0.9f;
+	public final static float TimeFactor = 0.85f;
 	
 	//*******************************************************************************************
 	
