@@ -15,6 +15,7 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.Color;
 import org.andengine.util.modifier.ease.EaseQuadIn;
+import org.andengine.util.modifier.ease.EaseQuadInOut;
 import org.andengine.util.modifier.ease.EaseQuadOut;
 import sadsido.coolculator.MainActivity;
 import sadsido.coolculator.game.Layout.Rect;
@@ -184,7 +185,7 @@ public class Button extends Sprite
 		IEntityModifier modifier = new SequenceEntityModifier
 		(			
 			new MoveYModifier(delay, getY(), getY()),	
-			new MoveYModifier(0.25f, getY(), toY, EaseQuadOut.getInstance())
+			new MoveYModifier(0.25f, getY(), toY, EaseQuadInOut.getInstance())
 		)
 		{
 			@Override
@@ -195,14 +196,13 @@ public class Button extends Sprite
 		registerEntityModifier(modifier);
 	}
 
-	public void playEndgameAnimation(float delay)
+	public void playEndgameAnimation(float delay, float toY)
 	{
 		// that's insane!
 		IEntityModifier modifier = new SequenceEntityModifier
 		(			
-			new ScaleAtModifier(delay, 1.0f, 1.0f, getWidth() / 2.0f, getHeight() / 2.0f),	
-			new ScaleModifier(0.1f, 1.0f, 1.0f, 1.00f, 0.05f),
-			new ScaleModifier(0.1f, 1.0f, 0.0f, 0.05f, 0.05f)
+			new MoveYModifier(delay, getY(), getY()),	
+			new MoveYModifier(0.6f, getY(), toY, EaseQuadInOut.getInstance())
 		)
 		{
 			@Override

@@ -342,12 +342,17 @@ public class GameScene extends Scene
 		m_animationSet.clear();
 		
 		// seems like the game is over:
-		for (int rowNo = 0; rowNo < Const.Rows; ++ rowNo)
-		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
+		float delay = 0.0f;
+		for (int rowNo = Const.Rows - 1; rowNo >= 0; -- rowNo)
+		for (int colNo = Const.Cols - 1; colNo >= 0; -- colNo)
 		{
-			m_animationSet.add(m_buttons[rowNo][colNo]);
-			m_buttons[rowNo][colNo].clearEntityModifiers();
-			m_buttons[rowNo][colNo].playEndgameAnimation((rowNo + colNo) * 0.1f);
+			Button button = m_buttons[rowNo][colNo];
+			m_animationSet.add(button);
+			
+			button.clearEntityModifiers();
+			button.playEndgameAnimation(delay, button.getY() + m_activity.getCamera().getHeight());
+			
+			delay += (float)Math.random() / 10.0f;
 		}		
 	}
 	
