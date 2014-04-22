@@ -18,11 +18,10 @@ public abstract class ValuePicker
 		switch (column)
 		{
 		case (Const.Cols - 1): return createLinearPicker();
-		case (Const.Cols - 2): return new RndValuePicker(0, 06);
 		}
 		
 		// otherwise random digit:
-		return new RndValuePicker(0, 9);
+		return new RndValuePicker(1, 9);
 	}	
 	
 	//*******************************************************************************************
