@@ -1,6 +1,8 @@
 package sadsido.coolculator.game;
 
 import javax.microedition.khronos.opengles.GL10;
+
+import org.andengine.entity.modifier.AlphaModifier;
 import org.andengine.entity.modifier.ColorModifier;
 import org.andengine.entity.modifier.IEntityModifier;
 import org.andengine.entity.modifier.MoveYModifier;
@@ -48,8 +50,7 @@ public class Button extends Sprite
 		m_row    = row;
 		m_col    = col;
 		
-		setColor(Color.WHITE);
-		
+		setColor(Color.WHITE);		
 		setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
 				
 		m_textval = new Text(0, 0, MainActivity.instance().getButtonFont(), "xxx", pVBO);
@@ -145,14 +146,15 @@ public class Button extends Sprite
 		registerEntityModifier(modifier);
 	}
 	
-	public void playVanishAnimation(float delay)
+	public void playVanishAnimation(float delay, Color color)
 	{
 		// that's insane!
 		IEntityModifier modifier = new SequenceEntityModifier
-		(			
-			new ScaleAtModifier(delay, 1.0f, 1.0f, getWidth() / 2.0f, getHeight() / 2.0f),	
-			new ScaleModifier(0.1f, 1.0f, 1.0f, 1.00f, 0.05f),
-			new ScaleModifier(0.1f, 1.0f, 0.0f, 0.05f, 0.05f)
+		(						
+			new ColorModifier(0.20f, getColor(), color),
+			new ScaleModifier(delay, 1.00f, 1.00f, 1.00f, 1.00f),
+			new ScaleModifier(0.10f, 1.00f, 1.00f, 1.00f, 0.05f),
+			new ScaleModifier(0.10f, 1.00f, 0.00f, 0.05f, 0.05f)
 		)
 		{
 			@Override

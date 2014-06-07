@@ -197,17 +197,13 @@ public class GameScene extends Scene
 		if (hasFullSelection())
 		{
 			final boolean isValid = isEquationValid();
+			final Color color = isValid ? Const.CorrectColor : Const.WrongColor;
 			
 			// vanish selected buttons:
 			for (int colNo = 0; colNo < Const.Cols; ++ colNo)
 			{ 
 				m_animationSet.add(m_buttons[m_selections[colNo]][colNo]);
-				m_buttons[m_selections[colNo]][colNo].playVanishAnimation(0.03f * colNo);
-				
-				// color buttons in case of wrong equation:
-				
-				if (!isValid)
-				{ m_buttons[m_selections[colNo]][colNo].setColor(Const.ErrorColor); }
+				m_buttons[m_selections[colNo]][colNo].playVanishAnimation(0.05f * colNo, color);
 			}
 		}
 	}

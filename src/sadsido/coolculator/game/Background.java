@@ -56,8 +56,9 @@ public class Background extends Rectangle
 						
 			IEntityModifier modifier = new SequenceEntityModifier
 			(
-				new ColorModifier(0.3f, getColor(), Color.BLACK),
-				new ColorModifier(0.3f, Color.BLACK, Const.BackgroundColors[m_index])
+				new ColorModifier(0.4f, getColor(),  Color.BLACK),
+				new ColorModifier(0.2f, Color.BLACK, Color.BLACK),
+				new ColorModifier(0.4f, Color.BLACK, Const.BackgroundColors[m_index])
 			); 
 			
 			registerEntityModifier(modifier);		
