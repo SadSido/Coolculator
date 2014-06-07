@@ -19,6 +19,7 @@ public class Const
 	// colors of the buttons:
 	
 	public final static Color SelectColor = new Color(0.55f, 0.55f, 0.55f);
+	public final static Color ErrorColor  = new Color(1.00f, 0.25f, 0.25f);
 
 	// background colors:
 	
