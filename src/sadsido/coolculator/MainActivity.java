@@ -137,7 +137,7 @@ public class MainActivity extends SimpleBaseGameActivity
 	private void loadRepeatingTextures() throws TextureAtlasBuilderException
 	{
 		BuildableBitmapTextureAtlas atlas1 = new BuildableBitmapTextureAtlas(getTextureManager(),  64,  16, TextureOptions.REPEATING_BILINEAR);
-		BuildableBitmapTextureAtlas atlas2 = new BuildableBitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.REPEATING_BILINEAR);
+		BuildableBitmapTextureAtlas atlas2 = new BuildableBitmapTextureAtlas(getTextureManager(), 512, 512, TextureOptions.REPEATING_BILINEAR);
 	
 		m_texTimebar = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas1, getAssets(), "timebar.png");
         m_texBackgr  = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas2, getAssets(), "background.png");

@@ -30,7 +30,7 @@ public class Background extends Rectangle
 		// creating blend over the background:
 		
 		m_blend = new Sprite(0.0f, 0.0f, rect.width(), rect.height(), region, pVBO);
-		m_blend.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
+		//m_blend.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
 		
 		attachChild(m_blend);
 		
