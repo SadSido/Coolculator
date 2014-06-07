@@ -28,6 +28,7 @@ public class Layout
 	private final float m_width;
 	private final float m_height;
 
+	private Rect m_rcTopBar;
 	private Rect m_rcScreen;
 	private Rect m_rcButtons;
 	private Rect m_rcButton;
@@ -47,6 +48,7 @@ public class Layout
 		float topBar = m_height / 7.0f;
 		float lftBar = m_width  / 4.0f; 
 		
+		m_rcTopBar  = new Rect(0.0f, 0.0f, m_width, topBar);
 		m_rcButtons = new Rect(0.0f, topBar, m_width, m_height);
 		
 		addMargins(m_rcButtons, 40.0f);
@@ -62,6 +64,9 @@ public class Layout
 	
 	//*******************************************************************************************
 
+	public Rect rcTopBar()
+	{ return m_rcTopBar; }
+	
 	public Rect rcButtons()
 	{ return m_rcButtons; }
 	

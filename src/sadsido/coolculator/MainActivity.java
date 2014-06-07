@@ -38,6 +38,7 @@ public class MainActivity extends SimpleBaseGameActivity
 	private Font m_menuFont;
 	private Font m_btnFont;
 	
+	private ITextureRegion m_texGradient;
 	private ITextureRegion m_texButton;
 	private ITextureRegion m_texBackgr;
 	private ITextureRegion m_texScore;
@@ -66,6 +67,9 @@ public class MainActivity extends SimpleBaseGameActivity
 	public void setScene(Scene scene)
 	{ getEngine().setScene(scene); }
 	
+	public ITextureRegion getGradientTexture()
+	{ return m_texGradient; }
+
 	public ITextureRegion getButtonTexture()
 	{ return m_texButton; }
 
@@ -126,9 +130,10 @@ public class MainActivity extends SimpleBaseGameActivity
 	{
 		BuildableBitmapTextureAtlas atlas = new BuildableBitmapTextureAtlas(getTextureManager(), 512, 512, TextureOptions.BILINEAR);
         
-		m_texButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "button.png");
-        m_texScore  = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "score.png");
-        m_texRecord = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "record.png");
+		m_texGradient = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "gradient.png");
+		m_texButton   = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "button.png");
+        m_texScore    = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "score.png");
+        m_texRecord   = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "record.png");
         
         atlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
         atlas.load();

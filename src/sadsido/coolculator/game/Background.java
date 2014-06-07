@@ -18,21 +18,24 @@ public class Background extends Rectangle
 	//*******************************************************************************************
 
 	private Sprite m_blend;
+	private Sprite m_grad;
+
 	private int m_level;
 	private int m_index;
 	
 	//*******************************************************************************************
 		
-	public Background(Rect rect, ITextureRegion region, VertexBufferObjectManager pVBO) 
+	public Background(Rect rect, Rect rcTop, ITextureRegion texBlend, ITextureRegion texGrad, VertexBufferObjectManager pVBO) 
 	{
 		super(rect.left, rect.top, rect.width(), rect.height(), pVBO);	
 		
 		// creating blend over the background:
 		
-		m_blend = new Sprite(0.0f, 0.0f, rect.width(), rect.height(), region, pVBO);
-		//m_blend.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
+		m_blend = new Sprite(rect.left, rect.top, rect.width(), rect.height(), texBlend, pVBO);
+		m_grad  = new Sprite(rcTop.left, rcTop.top + rcTop.height(), rcTop.width(), texGrad.getHeight(), texGrad, pVBO);
 		
 		attachChild(m_blend);
+		attachChild(m_grad);
 		
 		// set initial score & color:
 		

@@ -8,6 +8,7 @@ import org.andengine.entity.IEntity;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
+import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.Color;
 
 import sadsido.coolculator.MainActivity;
@@ -83,14 +84,18 @@ public class GameScene extends Scene
 		m_vpick         = new ValuePicker[Const.Cols];
 		m_spick         = new SignPicker[Const.Cols];
 		
+		// save some coding:
+		
+		final VertexBufferObjectManager VBO = m_activity.getVertexBufferObjectManager();
+		
 		// init background:
 		
-		m_back = new Background(m_layout.rcScreen(), m_activity.getBackgroundTexture(), m_activity.getVertexBufferObjectManager());
+		m_back = new Background(m_layout.rcScreen(), m_layout.rcTopBar(), m_activity.getBackgroundTexture(), m_activity.getGradientTexture(), VBO);
 		attachChild(m_back);
 		
 		// init timebar:
 		
-		m_timebar      = new Timebar(this, m_layout.rcTimebar(), m_activity.getTimebarTexture(), m_activity.getVertexBufferObjectManager());
+		m_timebar      = new Timebar(this, m_layout.rcTimebar(), m_activity.getTimebarTexture(), VBO);
 		attachChild(m_timebar);
 		
 		// init generators:
@@ -109,7 +114,7 @@ public class GameScene extends Scene
 		{
 			Rect rc = m_layout.rcButton(colNo, rowNo);
 			
-			m_buttons[rowNo][colNo] = new Button(this, rowNo, colNo, rc, m_activity.getButtonTexture(), m_activity.getVertexBufferObjectManager());
+			m_buttons[rowNo][colNo] = new Button(this, rowNo, colNo, rc, m_activity.getButtonTexture(), VBO);
 		
 			attachChild(m_buttons[rowNo][colNo]);
 			registerTouchArea(m_buttons[rowNo][colNo]);
@@ -129,8 +134,8 @@ public class GameScene extends Scene
 		// init score areas:
 		
 		m_goal   = Const.ScoreGoal;
-		m_score  = new Score(000, m_layout.rcScore(),  Score.Align.Left,  m_activity.getMenuFont(), m_activity.getScoreTexture(),  m_activity.getVertexBufferObjectManager());
-		m_record = new Score(999, m_layout.rcRecord(), Score.Align.Right, m_activity.getMenuFont(), m_activity.getRecordTexture(), m_activity.getVertexBufferObjectManager());
+		m_score  = new Score(000, m_layout.rcScore(),  Score.Align.Left,  m_activity.getMenuFont(), m_activity.getScoreTexture(),  VBO);
+		m_record = new Score(999, m_layout.rcRecord(), Score.Align.Right, m_activity.getMenuFont(), m_activity.getRecordTexture(), VBO);
 	
 		attachChild(m_score);
 		attachChild(m_record);
