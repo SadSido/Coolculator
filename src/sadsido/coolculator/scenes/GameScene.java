@@ -95,7 +95,7 @@ public class GameScene extends Scene
 		
 		// init timebar:
 		
-		m_timebar      = new Timebar(this, m_layout.rcTimebar(), m_activity.getTimebarTexture(), VBO);
+		m_timebar = new Timebar(this, m_layout.rcTimebar(), m_activity.getTimebarTexture(), VBO);
 		attachChild(m_timebar);
 		
 		// init generators:
@@ -106,11 +106,10 @@ public class GameScene extends Scene
 			m_spick[colNo] = SignPicker.create(colNo);	
 		}
 				
-		// init buttons (reverse order is required
-		// to set the "results" column properly:
+		// init buttons:
 		
-		for (int rowNo = Const.Rows - 1; rowNo >= 0; -- rowNo)
-		for (int colNo = Const.Cols - 1; colNo >= 0; -- colNo)
+		for (int rowNo = 0; rowNo < Const.Rows; ++ rowNo)
+		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
 		{
 			Rect rc = m_layout.rcButton(colNo, rowNo);
 			
