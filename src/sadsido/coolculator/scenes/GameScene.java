@@ -241,21 +241,21 @@ public class GameScene extends Scene
 			}
 			
 			// must run fall animation:
-			if ((m_selections[0] == 0) && singleRowSelected())
+			if ((m_selections[0] == (Const.Rows - 1)) && singleRowSelected())
 			{
 				// no falling animation required:
 				onFallingAnimationFinished(null);
 			}
 			else
 			{
-				// must fill in the gaps by falling down:
+				// must fill in the gaps by moving upwards:
 				for (int colNo = 0; colNo < Const.Cols; ++ colNo)
 				{
 					final int selection = m_selections[colNo];
-					for (int rowNo = 0; rowNo < selection; ++ rowNo)
+					for (int rowNo = (selection + 1); rowNo < Const.Rows; ++ rowNo)
 					{
 						m_animationSet.add(m_buttons[rowNo][colNo]);
-						m_buttons[rowNo][colNo].playFallingAnimation((selection - rowNo - 1) * 0.03f, m_layout.rcButton().height());
+						m_buttons[rowNo][colNo].playFallingAnimation((rowNo - selection - 1) * 0.03f, - m_layout.rcButton().height());
 					}
 				}
 			}
@@ -273,6 +273,11 @@ public class GameScene extends Scene
 		
 		if (!hasAnimation())
 		{
+			// calculate emerge heights:
+			
+			final float flyFr = m_activity.getCamera().getHeight();
+			final float flyTo = m_layout.rcButtons().bottom - m_layout.rcButton().height();
+
 			for (int colNo = 0; colNo < Const.Cols; ++ colNo)
 			{
 				final Button btn = m_buttons[m_selections[colNo]][colNo];
@@ -286,15 +291,16 @@ public class GameScene extends Scene
 				
 				// reuse button as a top-level one:
 				
+				btn.setValueSign(val, sgn);				
+				btn.setColor(Color.WHITE);
 				btn.setScaleX(1.0f);
 				btn.setScaleY(1.0f);
-				btn.setY(-btn.getHeight());
-				btn.setColor(Color.WHITE);
-				btn.setValueSign(val, sgn);				
+				btn.setY(flyFr);
 				
 				// play emerge animation:
+				
 				m_animationSet.add(btn);
-				btn.playEmergeAnimation(0.03f * colNo, m_layout.rcButtons().top);				
+				btn.playEmergeAnimation(0.03f * colNo, flyTo);				
 			}
 		}
 	}
@@ -313,16 +319,16 @@ public class GameScene extends Scene
 			for (int colNo = 0; colNo < Const.Cols; ++ colNo)
 			{
 				final int selection = m_selections[colNo];
-				Button btn = m_buttons[selection][colNo];
+				Button selectedBtn  = m_buttons[selection][colNo];
 				
-				for (int rowNo = selection; rowNo > 0; -- rowNo)
+				for (int rowNo = selection; rowNo < (Const.Rows - 1); ++ rowNo)
 				{ 
-					m_buttons[rowNo][colNo] = m_buttons[rowNo - 1][colNo];
+					m_buttons[rowNo][colNo] = m_buttons[rowNo + 1][colNo];
 					m_buttons[rowNo][colNo].setRowCol(rowNo, colNo);
 				}
 			
-				m_buttons[0][colNo] = btn;
-				m_buttons[0][colNo].setRowCol(0, colNo);
+				m_buttons[Const.Rows - 1][colNo] = selectedBtn;
+				m_buttons[Const.Rows - 1][colNo].setRowCol(Const.Rows - 1, colNo);
 			}
 			
 			// reset current selection:
