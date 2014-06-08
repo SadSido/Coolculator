@@ -366,8 +366,11 @@ public class GameScene extends Scene
 	
 	public void onResetAnimationFinished()
 	{
+		// time limit decreases the first 10 levels:
+		final int power  = Math.min(Const.MaxTimePow, m_score.level());
+		final float time = Const.StartTime * (float) Math.pow(Const.TimeFactor, power);
+		
 		// must set timeout for the new level:
-		final float time = Const.StartTime * (float) Math.pow(Const.TimeFactor, m_score.level());
 		m_timebar.playTimeoutAnimation(time);
 	}
 	
