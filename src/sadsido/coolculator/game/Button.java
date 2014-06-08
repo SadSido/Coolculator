@@ -49,9 +49,6 @@ public class Button extends Sprite
 		m_scene  = scene;
 		m_row    = row;
 		m_col    = col;
-		
-		setColor(Color.WHITE);		
-		setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
 				
 		m_textval = new Text(0, 0, MainActivity.instance().getButtonFont(), "xxx", pVBO);
 		m_textsig = new Text(0, 0, MainActivity.instance().getButtonFont(), "xxx", pVBO);
