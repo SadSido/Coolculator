@@ -132,9 +132,12 @@ public class GameScene extends Scene
 
 		// init score areas:
 		
+		final int score  = 0;
+		final int record = m_activity.getSettings().loadHighscore();
+		
 		m_goal   = Const.ScoreGoal;
-		m_score  = new Score(000, m_layout.rcScore(),  Score.Align.Left,  m_activity.getMenuFont(), m_activity.getScoreTexture(),  VBO);
-		m_record = new Score(999, m_layout.rcRecord(), Score.Align.Right, m_activity.getMenuFont(), m_activity.getRecordTexture(), VBO);
+		m_score  = new Score(score,  m_layout.rcScore(),  Score.Align.Left,  m_activity.getMenuFont(), m_activity.getScoreTexture(),  VBO);
+		m_record = new Score(record, m_layout.rcRecord(), Score.Align.Right, m_activity.getMenuFont(), m_activity.getRecordTexture(), VBO);
 	
 		attachChild(m_score);
 		attachChild(m_record);
@@ -226,6 +229,13 @@ public class GameScene extends Scene
 			final int sign  = (isValid) ? +1 : -1; 
 				
 			m_score.change(sign * bonus * delta);
+			
+			// check, whether we reached highscore:
+			if (m_score.score() > m_record.score())
+			{
+				m_record.change(m_score.score() - m_record.score());
+				m_activity.getSettings().saveHighscore(m_record.score());
+			}
 			
 			// check, whether we reached new level:
 			if (m_score.score() >= m_goal)

@@ -34,6 +34,7 @@ public class MainActivity extends SimpleBaseGameActivity
 	//*******************************************************************************************
 
 	private Camera m_camera; 
+	private Settings m_settings;
 	
 	private Font m_menuFont;
 	private Font m_btnFont;
@@ -57,6 +58,9 @@ public class MainActivity extends SimpleBaseGameActivity
 
 	public Camera getCamera()
 	{ return m_camera; }
+
+	public Settings getSettings()
+	{ return m_settings; }
 	
 	public Font getMenuFont()
 	{ return m_menuFont; }
@@ -97,6 +101,10 @@ public class MainActivity extends SimpleBaseGameActivity
 	@Override
 	protected void onCreateResources() 
 	{
+		// load settings:
+		
+		m_settings = new Settings(this);		
+		
 		// prepare fonts:
 		
 		m_menuFont = FontFactory.createFromAsset(getFontManager(), getTextureManager(), 512, 512, TextureOptions.BILINEAR, getAssets(), "inconsolata-bold.ttf", 100, true, Color.WHITE);
