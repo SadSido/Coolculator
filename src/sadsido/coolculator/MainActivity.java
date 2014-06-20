@@ -18,7 +18,9 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 
+import sadsido.coolculator.game.Layout;
 import sadsido.coolculator.scenes.SplashScene;
+import sadsido.coolculator.scenes.StartScene;
 import android.graphics.Color;
 
 
@@ -35,6 +37,7 @@ public class MainActivity extends SimpleBaseGameActivity
 
 	private Camera m_camera; 
 	private Settings m_settings;
+	private Layout m_layout;
 	
 	private Font m_menuFont;
 	private Font m_btnFont;
@@ -61,6 +64,9 @@ public class MainActivity extends SimpleBaseGameActivity
 
 	public Settings getSettings()
 	{ return m_settings; }
+	
+	public Layout getLayout()
+	{ return m_layout; }
 	
 	public Font getMenuFont()
 	{ return m_menuFont; }
@@ -95,6 +101,8 @@ public class MainActivity extends SimpleBaseGameActivity
 	public EngineOptions onCreateEngineOptions() 
 	{
 		m_camera = new Camera(0, 0, 1920, 1080);
+		m_layout = new Layout(m_camera);
+		
 		return new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, new FillResolutionPolicy(), m_camera);	
 	}
 
@@ -129,7 +137,7 @@ public class MainActivity extends SimpleBaseGameActivity
 	@Override
 	protected Scene onCreateScene() 
 	{
-		return new SplashScene();
+		return new StartScene();
 	}
 
 	//*******************************************************************************************

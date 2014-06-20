@@ -1,6 +1,8 @@
 package sadsido.coolculator.game;
 
 import javax.microedition.khronos.opengles.GL10;
+
+import org.andengine.entity.modifier.AlphaModifier;
 import org.andengine.entity.modifier.ColorModifier;
 import org.andengine.entity.modifier.IEntityModifier;
 import org.andengine.entity.modifier.SequenceEntityModifier;
@@ -47,6 +49,13 @@ public class Background extends Rectangle
 
 	//*******************************************************************************************
 	
+	public void playFadeinAnimation()
+	{
+		registerEntityModifier(new AlphaModifier(0.5f, 0.0f, 1.0f));
+	}
+	
+	//*******************************************************************************************
+
 	public void playLevelAnimation(int level)
 	{
 		if (level != m_level)

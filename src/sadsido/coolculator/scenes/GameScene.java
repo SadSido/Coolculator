@@ -76,11 +76,11 @@ public class GameScene extends Scene
 
 	public GameScene()
 	{
-		m_activity     = MainActivity.instance();
-		m_layout       = new Layout(m_activity.getCamera());
-		m_buttons      = new Button[Const.Rows][Const.Cols];
-		m_selections   = new int[Const.Cols];
-		m_animationSet = new HashSet<Button>();
+		m_activity      = MainActivity.instance();
+		m_layout        = m_activity.getLayout();
+		m_buttons       = new Button[Const.Rows][Const.Cols];
+		m_selections    = new int[Const.Cols];
+		m_animationSet  = new HashSet<Button>();
 		m_vpick         = new ValuePicker[Const.Cols];
 		m_spick         = new SignPicker[Const.Cols];
 		
