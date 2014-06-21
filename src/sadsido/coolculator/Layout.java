@@ -23,6 +23,12 @@ public class Layout
 		
 		public final float height()
 		{ return (bottom - top); }
+		
+		public final float centerX()
+		{ return (left + right) / 2f; }
+		
+		public final float centerY()
+		{ return (top + bottom) / 2f; }
 	}
 	
 	//*******************************************************************************************

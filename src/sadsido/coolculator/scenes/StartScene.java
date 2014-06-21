@@ -28,58 +28,54 @@ public class StartScene extends MenuScene implements IOnMenuItemClickListener
 	private static final int MENU_HOWTO = 1;
 
 	//*******************************************************************************************
-	
+
 	private MainActivity m_activity;
-	private Background m_back;
-	private Layout m_layout;
-	private Rectangle m_menurect;
 	
 	//*******************************************************************************************
 
 	public StartScene()
 	{
-		super(MainActivity.instance().getCamera());
-		
+		super(MainActivity.instance().getCamera());		
 		m_activity = MainActivity.instance();
-		m_layout = m_activity.getLayout();
 		
-		// save some coding:
-		
+		final Layout layout = m_activity.getLayout();
 		final VertexBufferObjectManager VBO = m_activity.getVertexBufferObjectManager();
 		
-		// init background:
+		// create background:
 		
-		m_back = new Background(m_layout.rcScreen(), m_layout.rcScreen(), m_activity.getBackgroundTexture(), m_activity.getGradientTexture(), VBO);
-		attachChild(m_back);
+		Background back = new Background(layout.rcScreen(), layout.rcScreen(), m_activity.getBackgroundTexture(), m_activity.getGradientTexture(), VBO);
+		attachChild(back);
+		
+		// create rectangle:
+		
+		Rect rcMenu = layout.rcMenu();
+		
+		Rectangle mrect = new Rectangle(rcMenu.left, rcMenu.top, rcMenu.width(), rcMenu.height(), VBO);
+		mrect.setAlpha(0.1f);
 
-		m_back.playFadeinAnimation();
+		attachChild(mrect);
+
+		// create menu items: 
 		
-		// init menu buttons: 
+		IMenuItem start = new TextMenuItem(MENU_START, m_activity.getButtonFont(), m_activity.getString(R.string.menu_start), VBO);
+		IMenuItem howto = new TextMenuItem(MENU_HOWTO, m_activity.getButtonFont(), m_activity.getString(R.string.menu_howto), VBO);
 		
-		IMenuItem start = createMenuItem(MENU_START, R.string.menu_start);
-		IMenuItem howto = createMenuItem(MENU_HOWTO, R.string.menu_howto);
+		start.setY(rcMenu.centerY() - start.getHeight() - 10f);
+		howto.setY(rcMenu.centerY() + 10f);
 		
-		start.setY(mCamera.getCenterY() - start.getHeight() / 2);
-		start.registerEntityModifier(new MoveXModifier(0.5f, mCamera.getWidth(), mCamera.getWidth() / 3.0f));
-		
-		howto.setY(mCamera.getCenterY() + start.getHeight() / 2 + 20.0f);
-		howto.registerEntityModifier(new MoveXModifier(0.6f, mCamera.getWidth(), mCamera.getWidth() / 3.0f));
 		
 		addMenuItem(start);
 		addMenuItem(howto);
 		
-		// init extra menu rect:
-		
-		Rect rcMenu = m_layout.rcMenu();
-		
-		m_menurect = new Rectangle(rcMenu.left, rcMenu.top, rcMenu.width(), rcMenu.height(), VBO);
-		m_menurect.setAlpha(0.1f);
-		
-		m_menurect.registerEntityModifier(new ScaleModifier(0.4f, 1f, 1f, 0f, 1f));
-		
-		attachChild(m_menurect);
-		
+		// assign menu listener:
 		setOnMenuItemClickListener(this);	
+
+		// trigger initial animations:
+		back.playFadeinAnimation();
+		
+		mrect.registerEntityModifier(new ScaleModifier(0.4f, 1f, 1f, 0f, 1f));
+		start.registerEntityModifier(new MoveXModifier(0.5f, mCamera.getWidth(), mCamera.getWidth() / 3.0f));		
+		howto.registerEntityModifier(new MoveXModifier(0.6f, mCamera.getWidth(), mCamera.getWidth() / 3.0f));
 	}
 	
 	//*******************************************************************************************
@@ -99,10 +95,5 @@ public class StartScene extends MenuScene implements IOnMenuItemClickListener
 		return false;
 	}
 
-	//*******************************************************************************************
-
-	private IMenuItem createMenuItem(int id, int textID)
-	{ return new TextMenuItem(id, m_activity.getButtonFont(), m_activity.getString(textID), m_activity.getVertexBufferObjectManager());}
-	
 	//*******************************************************************************************
 }
