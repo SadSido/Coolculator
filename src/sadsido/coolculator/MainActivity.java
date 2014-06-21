@@ -18,7 +18,6 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 
-import sadsido.coolculator.game.Layout;
 import sadsido.coolculator.scenes.SplashScene;
 import sadsido.coolculator.scenes.StartScene;
 import android.graphics.Color;
@@ -101,28 +100,29 @@ public class MainActivity extends SimpleBaseGameActivity
 	public EngineOptions onCreateEngineOptions() 
 	{
 		m_camera = new Camera(0, 0, 1920, 1080);
-		m_layout = new Layout(m_camera);
-		
 		return new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, new FillResolutionPolicy(), m_camera);	
 	}
 
 	@Override
 	protected void onCreateResources() 
 	{
-		// load settings:
-		
+		// load settings:		
 		m_settings = new Settings(this);		
 		
-		// prepare fonts:
+		// prepare layout:
+		m_layout = new Layout(m_camera);
 		
-		m_menuFont = FontFactory.createFromAsset(getFontManager(), getTextureManager(), 512, 512, TextureOptions.BILINEAR, getAssets(), "inconsolata-bold.ttf", 100, true, Color.WHITE);
+		// prepare fonts:		
+		final int ftmenuSize = 2 * (int)m_layout.rcTopBar().height() / 3;
+		final int ftbtnSize  = 2 * (int)m_layout.rcButton().height() / 3;
+		
+		m_menuFont = FontFactory.createFromAsset(getFontManager(), getTextureManager(), 512, 512, TextureOptions.BILINEAR, getAssets(), "inconsolata-bold.ttf", ftmenuSize, true, Color.WHITE);
 		m_menuFont.load();
 		
-		m_btnFont = FontFactory.createFromAsset(getFontManager(), getTextureManager(), 512, 512, TextureOptions.BILINEAR, getAssets(), "inconsolata-bold.ttf", 140, true, Color.WHITE);
+		m_btnFont = FontFactory.createFromAsset(getFontManager(), getTextureManager(), 512, 512, TextureOptions.BILINEAR, getAssets(), "inconsolata-bold.ttf", ftbtnSize, true, Color.WHITE);
 		m_btnFont.load();
 
-		// prepare textures:
-		
+		// prepare textures:		
 		try
 		{
 			loadBilinearTextures();

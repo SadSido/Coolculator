@@ -11,7 +11,8 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.Color;
-import sadsido.coolculator.game.Layout.Rect;
+
+import sadsido.coolculator.Layout.Rect;
 
 
 

@@ -2,6 +2,7 @@ package sadsido.coolculator.scenes;
 
 import org.andengine.entity.modifier.ColorModifier;
 import org.andengine.entity.modifier.MoveXModifier;
+import org.andengine.entity.modifier.ScaleModifier;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.MenuScene.IOnMenuItemClickListener;
@@ -9,10 +10,11 @@ import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.TextMenuItem;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
+import sadsido.coolculator.Layout;
+import sadsido.coolculator.Layout.Rect;
 import sadsido.coolculator.MainActivity;
 import sadsido.coolculator.R;
 import sadsido.coolculator.game.Background;
-import sadsido.coolculator.game.Layout;
 
 
 
@@ -30,6 +32,7 @@ public class StartScene extends MenuScene implements IOnMenuItemClickListener
 	private MainActivity m_activity;
 	private Background m_back;
 	private Layout m_layout;
+	private Rectangle m_menurect;
 	
 	//*******************************************************************************************
 
@@ -64,6 +67,17 @@ public class StartScene extends MenuScene implements IOnMenuItemClickListener
 		
 		addMenuItem(start);
 		addMenuItem(howto);
+		
+		// init extra menu rect:
+		
+		Rect rcMenu = m_layout.rcMenu();
+		
+		m_menurect = new Rectangle(rcMenu.left, rcMenu.top, rcMenu.width(), rcMenu.height(), VBO);
+		m_menurect.setAlpha(0.1f);
+		
+		m_menurect.registerEntityModifier(new ScaleModifier(0.4f, 1f, 1f, 0f, 1f));
+		
+		attachChild(m_menurect);
 		
 		setOnMenuItemClickListener(this);	
 	}

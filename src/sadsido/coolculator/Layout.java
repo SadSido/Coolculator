@@ -1,6 +1,8 @@
-package sadsido.coolculator.game;
+package sadsido.coolculator;
 
 import org.andengine.engine.camera.Camera;
+
+import sadsido.coolculator.game.Const;
 
 
 
@@ -35,6 +37,7 @@ public class Layout
 	private Rect m_rcTimebar;
 	private Rect m_rcScore;
 	private Rect m_rcRecord;
+	private Rect m_rcMenu;
 	
 	//*******************************************************************************************
 
@@ -60,10 +63,15 @@ public class Layout
 		m_rcRecord  = new Rect(m_width - lftBar, 0.0f, m_width, topBar);
 		
 		m_rcTimebar = new Rect(m_rcScore.right, topBar / 2.0f - 15.0f, m_rcRecord.left, topBar / 2.0f + 15.0f);
+		
+		m_rcMenu = new Rect(0f, m_height / 2f, m_width, m_height / 2f + 2f * m_rcButton.height());
 	}
 	
 	//*******************************************************************************************
 
+	public Rect rcMenu()
+	{ return m_rcMenu; }
+	
 	public Rect rcTopBar()
 	{ return m_rcTopBar; }
 	

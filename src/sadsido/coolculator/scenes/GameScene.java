@@ -11,12 +11,12 @@ import org.andengine.entity.text.Text;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.Color;
 
+import sadsido.coolculator.Layout;
 import sadsido.coolculator.MainActivity;
+import sadsido.coolculator.Layout.Rect;
 import sadsido.coolculator.game.Background;
 import sadsido.coolculator.game.Button;
 import sadsido.coolculator.game.Const;
-import sadsido.coolculator.game.Layout;
-import sadsido.coolculator.game.Layout.Rect;
 import sadsido.coolculator.game.Score;
 import sadsido.coolculator.game.Sign;
 import sadsido.coolculator.game.Timebar;

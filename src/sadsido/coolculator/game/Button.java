@@ -20,7 +20,7 @@ import org.andengine.util.modifier.ease.EaseQuadIn;
 import org.andengine.util.modifier.ease.EaseQuadInOut;
 import org.andengine.util.modifier.ease.EaseQuadOut;
 import sadsido.coolculator.MainActivity;
-import sadsido.coolculator.game.Layout.Rect;
+import sadsido.coolculator.Layout.Rect;
 import sadsido.coolculator.scenes.GameScene;
 
 

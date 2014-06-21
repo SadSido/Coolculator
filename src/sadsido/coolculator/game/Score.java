@@ -7,7 +7,7 @@ import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-import sadsido.coolculator.game.Layout.Rect;
+import sadsido.coolculator.Layout.Rect;
 
 public class Score extends Entity
 {
