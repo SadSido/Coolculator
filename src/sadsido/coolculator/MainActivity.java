@@ -47,6 +47,7 @@ public class MainActivity extends SimpleBaseGameActivity
 	private ITextureRegion m_texScore;
 	private ITextureRegion m_texRecord;
 	private ITextureRegion m_texTimebar;
+	private ITextureRegion m_texCCLogo;
 	
 	//*******************************************************************************************
 	
@@ -96,6 +97,9 @@ public class MainActivity extends SimpleBaseGameActivity
 
 	public ITextureRegion getTimebarTexture()
 	{ return m_texTimebar; }
+
+	public ITextureRegion getCCLogoTexture()
+	{ return m_texCCLogo; }
 	
 	//*******************************************************************************************
 
@@ -147,12 +151,13 @@ public class MainActivity extends SimpleBaseGameActivity
 	
 	private void loadBilinearTextures() throws TextureAtlasBuilderException
 	{
-		BuildableBitmapTextureAtlas atlas = new BuildableBitmapTextureAtlas(getTextureManager(), 512, 512, TextureOptions.BILINEAR);
+		BuildableBitmapTextureAtlas atlas = new BuildableBitmapTextureAtlas(getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
         
 		m_texGradient = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "gradient.png");
 		m_texButton   = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "button.png");
         m_texScore    = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "score.png");
         m_texRecord   = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "record.png");
+        m_texCCLogo   = BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, getAssets(), "cclogo.png");
         
         atlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
         atlas.load();

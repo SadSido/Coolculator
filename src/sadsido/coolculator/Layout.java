@@ -44,6 +44,7 @@ public class Layout
 	private Rect m_rcScore;
 	private Rect m_rcRecord;
 	private Rect m_rcMenu;
+	private Rect m_rcCCLogo;
 	
 	//*******************************************************************************************
 
@@ -70,13 +71,20 @@ public class Layout
 		
 		m_rcTimebar = new Rect(m_rcScore.right, topBar / 2.0f - 15.0f, m_rcRecord.left, topBar / 2.0f + 15.0f);
 		
-		m_rcMenu = new Rect(0f, m_height / 2f, m_width, m_height / 2f + 2f * m_rcButton.height());
+		m_rcMenu    = new Rect(0f, m_height / 2f, m_width, m_height / 2f + 2f * m_rcButton.height());
+		m_rcCCLogo  = new Rect(0f, 0f, m_width, m_rcMenu.top);
+		
+		addMargins(m_rcCCLogo, 80f);
+		makeAspect(m_rcCCLogo, 890f / 190f);
 	}
 	
 	//*******************************************************************************************
 
 	public Rect rcMenu()
 	{ return m_rcMenu; }
+	
+	public Rect rcCCLogo()
+	{ return m_rcCCLogo; }
 	
 	public Rect rcTopBar()
 	{ return m_rcTopBar; }
