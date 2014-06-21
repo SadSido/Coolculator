@@ -39,7 +39,7 @@ public class StartScene extends MenuScene implements IOnMenuItemClickListener
 		m_activity = MainActivity.instance();
 		
 		final Layout layout = m_activity.getLayout();
-		final VertexBufferObjectManager VBO = m_activity.getVertexBufferObjectManager();
+		final VertexBufferObjectManager VBO = m_activity.getVBO();
 		
 		// create background:
 		
@@ -63,7 +63,9 @@ public class StartScene extends MenuScene implements IOnMenuItemClickListener
 		start.setY(rcMenu.centerY() - start.getHeight() - 10f);
 		howto.setY(rcMenu.centerY() + 10f);
 		
-		
+		start.setAlpha(0.8f);
+		howto.setAlpha(0.8f);
+
 		addMenuItem(start);
 		addMenuItem(howto);
 		
@@ -71,11 +73,9 @@ public class StartScene extends MenuScene implements IOnMenuItemClickListener
 		setOnMenuItemClickListener(this);	
 
 		// trigger initial animations:
-		back.playFadeinAnimation();
-		
-		mrect.registerEntityModifier(new ScaleModifier(0.4f, 1f, 1f, 0f, 1f));
-		start.registerEntityModifier(new MoveXModifier(0.5f, mCamera.getWidth(), mCamera.getWidth() / 3.0f));		
-		howto.registerEntityModifier(new MoveXModifier(0.6f, mCamera.getWidth(), mCamera.getWidth() / 3.0f));
+		mrect.registerEntityModifier(new ScaleModifier(0.20f, 1f, 1f, 0f, 1f));
+		start.registerEntityModifier(new MoveXModifier(0.30f, mCamera.getWidth(), mCamera.getWidth() / 3.0f));		
+		howto.registerEntityModifier(new MoveXModifier(0.35f, mCamera.getWidth(), mCamera.getWidth() / 3.0f));
 	}
 	
 	//*******************************************************************************************

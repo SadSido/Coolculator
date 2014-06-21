@@ -15,7 +15,7 @@ import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSourc
 import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
 import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
 import org.andengine.opengl.texture.region.ITextureRegion;
-import org.andengine.opengl.texture.region.TextureRegion;
+import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 
 import sadsido.coolculator.scenes.SplashScene;
@@ -58,6 +58,9 @@ public class MainActivity extends SimpleBaseGameActivity
 	
 	//*******************************************************************************************
 
+	public VertexBufferObjectManager getVBO()
+	{ return getVertexBufferObjectManager(); }
+	
 	public Camera getCamera()
 	{ return m_camera; }
 
@@ -137,7 +140,7 @@ public class MainActivity extends SimpleBaseGameActivity
 	@Override
 	protected Scene onCreateScene() 
 	{
-		return new StartScene();
+		return new SplashScene();
 	}
 
 	//*******************************************************************************************
