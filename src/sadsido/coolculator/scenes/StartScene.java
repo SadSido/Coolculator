@@ -63,8 +63,8 @@ public class StartScene extends MenuScene implements IOnMenuItemClickListener
 		start.setY(rcMenu.centerY() - start.getHeight() - 10f);
 		howto.setY(rcMenu.centerY() + 10f);
 		
-		start.setAlpha(0.8f);
-		howto.setAlpha(0.8f);
+		start.setAlpha(0.75f);
+		howto.setAlpha(0.75f);
 
 		addMenuItem(start);
 		addMenuItem(howto);
@@ -86,8 +86,11 @@ public class StartScene extends MenuScene implements IOnMenuItemClickListener
 		switch (item.getID())
 		{
 		case MENU_START:
-			
+		{	
 			m_activity.setScene(new GameScene());
+			return true;
+		}
+		case MENU_HOWTO:
 			return true;
 		}
 		
