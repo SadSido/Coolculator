@@ -119,10 +119,10 @@ public class MainActivity extends SimpleBaseGameActivity
 		final int ftmenuSize = 2 * (int)m_layout.rcTopBar().height() / 3;
 		final int ftbtnSize  = 2 * (int)m_layout.rcButton().height() / 3;
 		
-		m_menuFont = FontFactory.createFromAsset(getFontManager(), getTextureManager(), 512, 512, TextureOptions.BILINEAR, getAssets(), "inconsolata-bold.ttf", ftmenuSize, true, Color.WHITE);
+		m_menuFont = FontFactory.createFromAsset(getFontManager(), getTextureManager(), 512, 512, TextureOptions.BILINEAR, getAssets(), "cheeseusauceu.ttf", ftmenuSize, true, Color.WHITE);
 		m_menuFont.load();
 		
-		m_btnFont = FontFactory.createFromAsset(getFontManager(), getTextureManager(), 512, 512, TextureOptions.BILINEAR, getAssets(), "inconsolata-bold.ttf", ftbtnSize, true, Color.WHITE);
+		m_btnFont = FontFactory.createFromAsset(getFontManager(), getTextureManager(), 512, 512, TextureOptions.BILINEAR, getAssets(), "cheeseusauceu.ttf", ftbtnSize, true, Color.WHITE);
 		m_btnFont.load();
 
 		// prepare textures:		

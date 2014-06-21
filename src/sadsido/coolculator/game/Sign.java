@@ -29,7 +29,7 @@ public abstract class Sign
 	{
 		@Override public int apply(int lhv, int rhv) { return lhv * rhv; }		
 		@Override public Color getColor() { return Const.MultColor; }
-		@Override public String getText() { return "*"; }
+		@Override public String getText() { return "x"; }
 	};
 	public static Sign Equals = new Sign() 
 	{
