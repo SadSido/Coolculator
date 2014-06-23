@@ -5,6 +5,7 @@ import javax.microedition.khronos.opengles.GL10;
 import org.andengine.entity.modifier.AlphaModifier;
 import org.andengine.entity.modifier.ColorModifier;
 import org.andengine.entity.modifier.IEntityModifier;
+import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.modifier.MoveYModifier;
 import org.andengine.entity.modifier.ParallelEntityModifier;
 import org.andengine.entity.modifier.ScaleAtModifier;
@@ -143,7 +144,7 @@ public class Button extends Sprite
 		registerEntityModifier(modifier);
 	}
 	
-	public void playVanishAnimation(float delay, Color color)
+	public void playRemoveEquationAnimation(float delay, Color color)
 	{
 		// that's insane!
 		IEntityModifier modifier = new SequenceEntityModifier
@@ -156,7 +157,39 @@ public class Button extends Sprite
 		{
 			@Override
 			protected void onModifierFinished(org.andengine.entity.IEntity pItem)
-			{ m_scene.onVanishAnimationFinished(Button.this); };
+			{ m_scene.onRemoveEquationAnimationFinished(Button.this); };
+		};
+		
+		registerEntityModifier(modifier);
+	}
+	
+	public void playLevelCompleteAnimation(float delay, float toX)
+	{
+		IEntityModifier modifier = new SequenceEntityModifier
+		(						
+			new MoveXModifier(delay, getX(), getX()),
+			new MoveXModifier(0.60f, getX(), toX, EaseQuadIn.getInstance())
+		)
+		{
+			@Override
+			protected void onModifierFinished(org.andengine.entity.IEntity pItem)
+			{ m_scene.onLevelCompleteAnimationFinished(Button.this); };
+		};
+		
+		registerEntityModifier(modifier);
+	}
+
+	public void playStartLevelAnimation(float delay, float frX, float toX)
+	{
+		IEntityModifier modifier = new SequenceEntityModifier
+		(						
+			new MoveXModifier(delay, frX, frX),
+			new MoveXModifier(0.60f, frX, toX, EaseQuadIn.getInstance())
+		)
+		{
+			@Override
+			protected void onModifierFinished(org.andengine.entity.IEntity pItem)
+			{ m_scene.onStartLevelAnimationFinished(Button.this); };
 		};
 		
 		registerEntityModifier(modifier);

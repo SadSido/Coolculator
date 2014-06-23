@@ -205,12 +205,12 @@ public class GameScene extends Scene
 			for (int colNo = 0; colNo < Const.Cols; ++ colNo)
 			{ 
 				m_animationSet.add(m_buttons[m_selections[colNo]][colNo]);
-				m_buttons[m_selections[colNo]][colNo].playVanishAnimation(0.05f * colNo, color);
+				m_buttons[m_selections[colNo]][colNo].playRemoveEquationAnimation(0.05f * colNo, color);
 			}
 		}
 	}
 	
-	public void onVanishAnimationFinished(Button button)
+	public void onRemoveEquationAnimationFinished(Button button)
 	{
 		// pop animation out of the set:
 		
@@ -244,9 +244,19 @@ public class GameScene extends Scene
 				m_goal = (m_score.level() + 1) * Const.ScoreGoal;
 
 				// some important animation:
-				m_back.playLevelAnimation(m_score.level());
-				m_timebar.playResetAnimation();
+				//m_back.playLevelAnimation(m_score.level());
+				//m_timebar.playResetAnimation();
 				
+				// remove all other buttons:
+				// must fill in the gaps by moving upwards:
+				for (int colNo = 0; colNo < Const.Cols; ++ colNo)
+				for (int rowNo = 0; rowNo < Const.Rows; ++ rowNo)
+				{
+					m_animationSet.add(m_buttons[rowNo][colNo]);
+					m_buttons[rowNo][colNo].playLevelCompleteAnimation(0.1f * colNo, m_buttons[rowNo][colNo].getX() - m_layout.width());
+				}
+				
+				return;
 			}
 			
 			// must run fall animation:
@@ -271,6 +281,35 @@ public class GameScene extends Scene
 		}
 	}
 		
+	public void onLevelCompleteAnimationFinished(Button button)
+	{
+		// animation guard:
+		
+		m_animationSet.remove(button);
+		if (hasAnimation()) { return; }
+		
+		// here: update buttons:
+		
+		// trigger new level animation:
+
+		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
+		for (int rowNo = 0; rowNo < Const.Rows; ++ rowNo)
+		{
+			Rect rect = m_layout.rcButton(colNo, rowNo);
+			
+			m_animationSet.add(m_buttons[rowNo][colNo]);
+			m_buttons[rowNo][colNo].playStartLevelAnimation(0.1f * colNo, m_layout.width() + rect.left, rect.left);
+		}
+	}
+	
+	public void onStartLevelAnimationFinished(Button button)
+	{
+		// animation guard:
+		
+		m_animationSet.remove(button);
+		if (hasAnimation()) { return; }
+	}
+	
 	public void onFallingAnimationFinished(Button button)
 	{
 		// pop animation out of the set:

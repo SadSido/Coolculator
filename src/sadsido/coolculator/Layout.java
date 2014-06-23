@@ -80,6 +80,12 @@ public class Layout
 	
 	//*******************************************************************************************
 
+	public float width()
+	{ return m_width; }
+	
+	public float height()
+	{ return m_height; }
+	
 	public Rect rcMenu()
 	{ return m_rcMenu; }
 	
