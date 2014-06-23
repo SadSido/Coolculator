@@ -144,7 +144,7 @@ public class GameScene extends Scene
 		
 		// run the timer:
 		
-		onResetAnimationFinished();
+		startTimebar();
 	}
 
 	//*******************************************************************************************
@@ -246,6 +246,8 @@ public class GameScene extends Scene
 				// some important animation:
 				//m_back.playLevelAnimation(m_score.level());
 				//m_timebar.playResetAnimation();
+				// stop the timer:
+				stopTimebar();
 				
 				// remove all other buttons:
 				// must fill in the gaps by moving upwards:
@@ -290,6 +292,14 @@ public class GameScene extends Scene
 		
 		// here: update buttons:
 		
+		// trigger background animation:
+		
+		m_back.playLevelAnimation(m_score.level());
+		
+		// time bar animation:
+		
+		resetTimebar();
+		
 		// trigger new level animation:
 
 		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
@@ -308,6 +318,10 @@ public class GameScene extends Scene
 		
 		m_animationSet.remove(button);
 		if (hasAnimation()) { return; }
+		
+		// start new level timer:
+		
+		startTimebar();
 	}
 	
 	public void onFallingAnimationFinished(Button button)
@@ -418,14 +432,22 @@ public class GameScene extends Scene
 		}		
 	}
 	
-	public void onResetAnimationFinished()
+	//*******************************************************************************************
+
+	public void resetTimebar()
+	{ m_timebar.reset(); }
+	
+	public void stopTimebar()
+	{ m_timebar.stop(); }
+	
+	public void startTimebar()
 	{
 		// time limit decreases the first 10 levels:
 		final int power  = Math.min(Const.MaxTimePow, m_score.level());
 		final float time = Const.StartTime * (float) Math.pow(Const.TimeFactor, power);
 		
 		// must set timeout for the new level:
-		m_timebar.playTimeoutAnimation(time);
+		m_timebar.start(time);
 	}
 	
 	//*******************************************************************************************

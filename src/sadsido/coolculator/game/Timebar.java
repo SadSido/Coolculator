@@ -43,7 +43,7 @@ public class Timebar extends Entity
 
 	//*******************************************************************************************
 
-	public void playTimeoutAnimation(float time)
+	public void start(float time)
 	{
 		IEntityModifier modifier = new ScaleAtModifier(time, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, m_botBar.getHeight() / 2.0f) 
 		{
@@ -55,18 +55,15 @@ public class Timebar extends Entity
 		m_topBar.registerEntityModifier(modifier);
 	}
 
-	public void playResetAnimation()
+	public void reset()
+	{
+		IEntityModifier modifier = new ScaleAtModifier(0.3f, m_topBar.getScaleX(), 1.0f, 1.0f, 1.0f, 0.0f, m_botBar.getHeight() / 2.0f) ;		
+		m_topBar.registerEntityModifier(modifier);
+	}
+	
+	public void stop()
 	{
 		m_topBar.clearEntityModifiers();
-		
-		IEntityModifier modifier = new ScaleAtModifier(0.3f, m_topBar.getScaleX(), 1.0f, 1.0f, 1.0f, 0.0f, m_botBar.getHeight() / 2.0f) 
-		{
-			@Override
-			protected void onModifierFinished(org.andengine.entity.IEntity pItem)
-			{ m_scene.onResetAnimationFinished(); };
-		};
-		
-		m_topBar.registerEntityModifier(modifier);
 	}
 	
 	//*******************************************************************************************
