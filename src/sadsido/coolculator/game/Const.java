@@ -26,7 +26,7 @@ public class Const
 	
 	public final static Color[] BackgroundColors = new Color[] 
 	{
-		new Color(050f / 255f,     050f / 255f,     130f / 255f),
+		new Color(040f / 255f,     040f / 255f,     120f / 255f),
 		new Color(135f / 255f,     070f / 255f,     035f / 255f),
 		new Color(015f / 255f,     090f / 255f,     060f / 255f),
 		new Color(120f / 255f,     050f / 255f,     055f / 255f),

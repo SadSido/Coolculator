@@ -29,6 +29,8 @@ public class Layout
 		
 		public final float centerY()
 		{ return (top + bottom) / 2f; }
+		
+		public final static Rect Empty = new Rect(0f, 0f, 0f, 0f);
 	}
 	
 	//*******************************************************************************************
@@ -61,7 +63,7 @@ public class Layout
 		m_rcTopBar  = new Rect(0.0f, 0.0f, m_width, topBar);
 		m_rcButtons = new Rect(0.0f, topBar, m_width, m_height);
 		
-		addMargins(m_rcButtons, 40.0f);
+		addMargins(m_rcButtons, 50.0f);
 		makeAspect(m_rcButtons, 2.0f * Const.Cols / Const.Rows);
 		
 		m_rcButton = new Rect(0.0f, 0.0f, m_rcButtons.width() / Const.Cols, m_rcButtons.height() / Const.Rows);

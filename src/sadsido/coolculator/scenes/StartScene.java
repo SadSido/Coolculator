@@ -45,7 +45,7 @@ public class StartScene extends MenuScene implements IOnMenuItemClickListener
 		
 		// create background:
 		
-		Background back = new Background(layout.rcScreen(), layout.rcScreen(), m_activity.getBackgroundTexture(), m_activity.getGradientTexture(), VBO);
+		Background back = new Background(layout.rcScreen(), Layout.Rect.Empty, m_activity.getBackgroundTexture(), m_activity.getGradientTexture(), VBO);
 		attachChild(back);
 		
 		// create rectangle and logo:

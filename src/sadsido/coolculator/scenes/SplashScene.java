@@ -28,7 +28,7 @@ public class SplashScene extends Scene implements IOnSceneTouchListener
 		m_layout = m_activity.getLayout();
 		
 		// create background:
-		Background back = new Background(m_layout.rcScreen(), m_layout.rcScreen(), m_activity.getBackgroundTexture(), m_activity.getGradientTexture(), m_activity.getVBO());
+		Background back = new Background(m_layout.rcScreen(), Layout.Rect.Empty, m_activity.getBackgroundTexture(), m_activity.getGradientTexture(), m_activity.getVBO());
 		attachChild(back);
 		
 		// handle touch event:

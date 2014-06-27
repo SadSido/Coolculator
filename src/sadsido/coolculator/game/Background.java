@@ -22,6 +22,7 @@ public class Background extends Rectangle
 
 	private Sprite m_blend;
 	private Sprite m_grad;
+	private Rectangle m_head;
 
 	private int m_level;
 	private int m_index;
@@ -36,8 +37,12 @@ public class Background extends Rectangle
 		
 		m_blend = new Sprite(rect.left, rect.top, rect.width(), rect.height(), texBlend, pVBO);
 		m_grad  = new Sprite(rcTop.left, rcTop.top + rcTop.height(), rcTop.width(), texGrad.getHeight(), texGrad, pVBO);
+		m_head  = new Rectangle(rcTop.left, rcTop.top, rcTop.width(), rcTop.height(), pVBO);
 		
+		m_head.setAlpha(0.1f);
+
 		attachChild(m_blend);
+		attachChild(m_head);
 		attachChild(m_grad);
 		
 		// set initial score & color:
