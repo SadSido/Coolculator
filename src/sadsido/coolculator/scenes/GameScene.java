@@ -299,6 +299,13 @@ public class GameScene extends Scene
 		// time bar animation:
 		
 		resetTimebar();
+
+		reuseSelectedButtons();
+		
+		updateButtonIndices(true);
+		
+		
+		resetSelection();
 		
 		// trigger new level animation:
 
@@ -335,66 +342,80 @@ public class GameScene extends Scene
 		
 		if (!hasAnimation())
 		{
-			// calculate emerge heights:
+			// set new values for selected buttons:
+			reuseSelectedButtons();
 			
+			// play emerging animation for selected buttons:
 			final float flyFr = m_activity.getCamera().getHeight();
 			final float flyTo = m_layout.rcButtons().bottom - m_layout.rcButton().height();
 
 			for (int colNo = 0; colNo < Const.Cols; ++ colNo)
 			{
 				final Button btn = m_buttons[m_selections[colNo]][colNo];
-				
-				// get new value for the button:
-				
-				m_vpick[colNo].pushValue(btn.value());				
-				
-				final int  val = m_vpick[colNo].pickValue();
-				final Sign sgn = m_spick[colNo].pickSign(val);
-				
-				// reuse button as a top-level one:
-				
-				btn.setValueSign(val, sgn);				
-				btn.setColor(Color.WHITE);
-				btn.setScaleX(1.0f);
-				btn.setScaleY(1.0f);
-				btn.setY(flyFr);
-				
-				// play emerge animation:
-				
 				m_animationSet.add(btn);
+							
+				btn.setY(flyFr);
 				btn.playEmergeAnimation(0.03f * colNo, flyTo);				
 			}
 		}
 	}
 	
+	private void reuseSelectedButtons()
+	{
+		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
+		{
+			final Button btn = m_buttons[m_selections[colNo]][colNo];
+			
+			// get new value for the button:			
+			m_vpick[colNo].pushValue(btn.value());				
+			
+			final int  val = m_vpick[colNo].pickValue();
+			final Sign sgn = m_spick[colNo].pickSign(val);
+			
+			btn.setValueSign(val, sgn);				
+
+			// restore button geometry and color:			
+			btn.setColor(Color.WHITE);
+			btn.setScaleX(1.0f);
+			btn.setScaleY(1.0f);
+		}
+	}
+	
 	public void onEmergeAnimationFinished(Button button)
 	{
-		// pop animation out of the set:
-		
 		m_animationSet.remove(button);
 
-		// ...
-		
 		if (!hasAnimation())
 		{
-			// we have to re-assign correct indices to all buttons:
-			for (int colNo = 0; colNo < Const.Cols; ++ colNo)
-			{
-				final int selection = m_selections[colNo];
-				Button selectedBtn  = m_buttons[selection][colNo];
-				
-				for (int rowNo = selection; rowNo < (Const.Rows - 1); ++ rowNo)
-				{ 
-					m_buttons[rowNo][colNo] = m_buttons[rowNo + 1][colNo];
-					m_buttons[rowNo][colNo].setRowCol(rowNo, colNo);
-				}
-			
-				m_buttons[Const.Rows - 1][colNo] = selectedBtn;
-				m_buttons[Const.Rows - 1][colNo].setRowCol(Const.Rows - 1, colNo);
-			}
-			
-			// reset current selection:
+			updateButtonIndices(false);
 			resetSelection();
+		}
+	}
+	
+	private void updateButtonIndices(boolean withPosition)
+	{
+		// we have to re-assign correct indices to all buttons,
+		// as the selected buttons are now at the bottom:
+		
+		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
+		{
+			final int selection = m_selections[colNo];
+			Button selectedBtn  = m_buttons[selection][colNo];
+			
+			for (int rowNo = selection; rowNo < (Const.Rows - 1); ++ rowNo)
+			{ 
+				m_buttons[rowNo][colNo] = m_buttons[rowNo + 1][colNo];
+				m_buttons[rowNo][colNo].setRowCol(rowNo, colNo);
+				
+				if (withPosition)
+				{ m_buttons[rowNo][colNo].setY(m_layout.rcButton(colNo, rowNo).top); }
+			}
+		
+			m_buttons[Const.Rows - 1][colNo] = selectedBtn;
+			m_buttons[Const.Rows - 1][colNo].setRowCol(Const.Rows - 1, colNo);
+
+			if (withPosition)
+			{ m_buttons[Const.Rows - 1][colNo].setY(m_layout.rcButton(colNo, Const.Rows - 1).top); }
 		}
 	}
 	
