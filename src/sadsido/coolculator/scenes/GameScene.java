@@ -144,7 +144,7 @@ public class GameScene extends Scene
 		
 		// run the timer:
 		
-		onResetAnimationFinished();
+		startTimebar();
 	}
 
 	//*******************************************************************************************
@@ -205,12 +205,12 @@ public class GameScene extends Scene
 			for (int colNo = 0; colNo < Const.Cols; ++ colNo)
 			{ 
 				m_animationSet.add(m_buttons[m_selections[colNo]][colNo]);
-				m_buttons[m_selections[colNo]][colNo].playVanishAnimation(0.05f * colNo, color);
+				m_buttons[m_selections[colNo]][colNo].playRemoveEquationAnimation(0.05f * colNo, color);
 			}
 		}
 	}
 	
-	public void onVanishAnimationFinished(Button button)
+	public void onRemoveEquationAnimationFinished(Button button)
 	{
 		// pop animation out of the set:
 		
@@ -244,9 +244,24 @@ public class GameScene extends Scene
 				m_goal = (m_score.level() + 1) * Const.ScoreGoal;
 
 				// some important animation:
-				m_back.playLevelAnimation(m_score.level());
-				m_timebar.playResetAnimation();
+				//m_back.playLevelAnimation(m_score.level());
+				//m_timebar.playResetAnimation();
+				// stop the timer:
+				stopTimebar();
 				
+				//
+				m_back.playLevelEndAnimation();
+				
+				// remove all other buttons:
+				// must fill in the gaps by moving upwards:
+				for (int colNo = 0; colNo < Const.Cols; ++ colNo)
+				for (int rowNo = 0; rowNo < Const.Rows; ++ rowNo)
+				{
+					m_animationSet.add(m_buttons[rowNo][colNo]);
+					m_buttons[rowNo][colNo].playLevelCompleteAnimation(0.1f * colNo, m_buttons[rowNo][colNo].getX() - m_layout.width());
+				}
+				
+				return;
 			}
 			
 			// must run fall animation:
@@ -271,6 +286,54 @@ public class GameScene extends Scene
 		}
 	}
 		
+	public void onLevelCompleteAnimationFinished(Button button)
+	{
+		// animation guard:
+		
+		m_animationSet.remove(button);
+		if (hasAnimation()) { return; }
+		
+		// here: update buttons:
+		
+		// trigger background animation:
+		
+		m_back.playLevelBeginAnimation(m_score.level());
+		
+		// time bar animation:
+		
+		resetTimebar();
+
+		reuseSelectedButtons();
+		
+		updateButtonIndices(true);
+		
+		
+		resetSelection();
+		
+		// trigger new level animation:
+
+		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
+		for (int rowNo = 0; rowNo < Const.Rows; ++ rowNo)
+		{
+			Rect rect = m_layout.rcButton(colNo, rowNo);
+			
+			m_animationSet.add(m_buttons[rowNo][colNo]);
+			m_buttons[rowNo][colNo].playStartLevelAnimation(0.1f * colNo, m_layout.width() + rect.left, rect.left);
+		}
+	}
+	
+	public void onStartLevelAnimationFinished(Button button)
+	{
+		// animation guard:
+		
+		m_animationSet.remove(button);
+		if (hasAnimation()) { return; }
+		
+		// start new level timer:
+		
+		startTimebar();
+	}
+	
 	public void onFallingAnimationFinished(Button button)
 	{
 		// pop animation out of the set:
@@ -282,66 +345,80 @@ public class GameScene extends Scene
 		
 		if (!hasAnimation())
 		{
-			// calculate emerge heights:
+			// set new values for selected buttons:
+			reuseSelectedButtons();
 			
+			// play emerging animation for selected buttons:
 			final float flyFr = m_activity.getCamera().getHeight();
 			final float flyTo = m_layout.rcButtons().bottom - m_layout.rcButton().height();
 
 			for (int colNo = 0; colNo < Const.Cols; ++ colNo)
 			{
 				final Button btn = m_buttons[m_selections[colNo]][colNo];
-				
-				// get new value for the button:
-				
-				m_vpick[colNo].pushValue(btn.value());				
-				
-				final int  val = m_vpick[colNo].pickValue();
-				final Sign sgn = m_spick[colNo].pickSign(val);
-				
-				// reuse button as a top-level one:
-				
-				btn.setValueSign(val, sgn);				
-				btn.setColor(Color.WHITE);
-				btn.setScaleX(1.0f);
-				btn.setScaleY(1.0f);
-				btn.setY(flyFr);
-				
-				// play emerge animation:
-				
 				m_animationSet.add(btn);
+							
+				btn.setY(flyFr);
 				btn.playEmergeAnimation(0.03f * colNo, flyTo);				
 			}
 		}
 	}
 	
+	private void reuseSelectedButtons()
+	{
+		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
+		{
+			final Button btn = m_buttons[m_selections[colNo]][colNo];
+			
+			// get new value for the button:			
+			m_vpick[colNo].pushValue(btn.value());				
+			
+			final int  val = m_vpick[colNo].pickValue();
+			final Sign sgn = m_spick[colNo].pickSign(val);
+			
+			btn.setValueSign(val, sgn);				
+
+			// restore button geometry and color:			
+			btn.setColor(Color.WHITE);
+			btn.setScaleX(1.0f);
+			btn.setScaleY(1.0f);
+		}
+	}
+	
 	public void onEmergeAnimationFinished(Button button)
 	{
-		// pop animation out of the set:
-		
 		m_animationSet.remove(button);
 
-		// ...
-		
 		if (!hasAnimation())
 		{
-			// we have to re-assign correct indices to all buttons:
-			for (int colNo = 0; colNo < Const.Cols; ++ colNo)
-			{
-				final int selection = m_selections[colNo];
-				Button selectedBtn  = m_buttons[selection][colNo];
-				
-				for (int rowNo = selection; rowNo < (Const.Rows - 1); ++ rowNo)
-				{ 
-					m_buttons[rowNo][colNo] = m_buttons[rowNo + 1][colNo];
-					m_buttons[rowNo][colNo].setRowCol(rowNo, colNo);
-				}
-			
-				m_buttons[Const.Rows - 1][colNo] = selectedBtn;
-				m_buttons[Const.Rows - 1][colNo].setRowCol(Const.Rows - 1, colNo);
-			}
-			
-			// reset current selection:
+			updateButtonIndices(false);
 			resetSelection();
+		}
+	}
+	
+	private void updateButtonIndices(boolean withPosition)
+	{
+		// we have to re-assign correct indices to all buttons,
+		// as the selected buttons are now at the bottom:
+		
+		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
+		{
+			final int selection = m_selections[colNo];
+			Button selectedBtn  = m_buttons[selection][colNo];
+			
+			for (int rowNo = selection; rowNo < (Const.Rows - 1); ++ rowNo)
+			{ 
+				m_buttons[rowNo][colNo] = m_buttons[rowNo + 1][colNo];
+				m_buttons[rowNo][colNo].setRowCol(rowNo, colNo);
+				
+				if (withPosition)
+				{ m_buttons[rowNo][colNo].setY(m_layout.rcButton(colNo, rowNo).top); }
+			}
+		
+			m_buttons[Const.Rows - 1][colNo] = selectedBtn;
+			m_buttons[Const.Rows - 1][colNo].setRowCol(Const.Rows - 1, colNo);
+
+			if (withPosition)
+			{ m_buttons[Const.Rows - 1][colNo].setY(m_layout.rcButton(colNo, Const.Rows - 1).top); }
 		}
 	}
 	
@@ -379,14 +456,22 @@ public class GameScene extends Scene
 		}		
 	}
 	
-	public void onResetAnimationFinished()
+	//*******************************************************************************************
+
+	public void resetTimebar()
+	{ m_timebar.reset(); }
+	
+	public void stopTimebar()
+	{ m_timebar.stop(); }
+	
+	public void startTimebar()
 	{
 		// time limit decreases the first 10 levels:
 		final int power  = Math.min(Const.MaxTimePow, m_score.level());
 		final float time = Const.StartTime * (float) Math.pow(Const.TimeFactor, power);
 		
 		// must set timeout for the new level:
-		m_timebar.playTimeoutAnimation(time);
+		m_timebar.start(time);
 	}
 	
 	//*******************************************************************************************
