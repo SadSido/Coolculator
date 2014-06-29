@@ -249,6 +249,9 @@ public class GameScene extends Scene
 				// stop the timer:
 				stopTimebar();
 				
+				//
+				m_back.playLevelEndAnimation();
+				
 				// remove all other buttons:
 				// must fill in the gaps by moving upwards:
 				for (int colNo = 0; colNo < Const.Cols; ++ colNo)
@@ -294,7 +297,7 @@ public class GameScene extends Scene
 		
 		// trigger background animation:
 		
-		m_back.playLevelAnimation(m_score.level());
+		m_back.playLevelBeginAnimation(m_score.level());
 		
 		// time bar animation:
 		

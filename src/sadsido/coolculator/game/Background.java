@@ -57,22 +57,17 @@ public class Background extends Rectangle
 	
 	//*******************************************************************************************
 
-	public void playLevelAnimation(int level)
+	public void playLevelEndAnimation()
 	{
-		if (level != m_level)
-		{
-			m_level = level;
-			m_index = level % Const.BackgroundColors.length;
-						
-			IEntityModifier modifier = new SequenceEntityModifier
-			(
-				new ColorModifier(0.4f, getColor(),  Color.BLACK),
-				new ColorModifier(0.2f, Color.BLACK, Color.BLACK),
-				new ColorModifier(0.4f, Color.BLACK, Const.BackgroundColors[m_index])
-			); 
-			
-			registerEntityModifier(modifier);		
-		}
+		registerEntityModifier(new ColorModifier(0.7f, getColor(),  Color.BLACK));		
+	}
+	
+	public void playLevelBeginAnimation(int level)
+	{
+		m_level = level;
+		m_index = level % Const.BackgroundColors.length;
+					
+		registerEntityModifier(new ColorModifier(0.7f, getColor(), Const.BackgroundColors[m_index]));		
 	}
 	
 	//*******************************************************************************************
