@@ -21,7 +21,7 @@ public abstract class ValuePicker
 		}
 		
 		// otherwise random digit:
-		return new RndValuePicker(1, 9);
+		return new RndValuePicker(0, 9);
 	}	
 	
 	//*******************************************************************************************
