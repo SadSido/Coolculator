@@ -26,18 +26,18 @@ public class Const
 	
 	public final static Color[] BackgroundColors = new Color[] 
 	{
-		new Color(040f / 255f,     040f / 255f,     120f / 255f),
+		new Color(030f / 255f,     075f / 255f,     115f / 255f),
 		new Color(135f / 255f,     070f / 255f,     035f / 255f),
 		new Color(015f / 255f,     090f / 255f,     060f / 255f),
 		new Color(120f / 255f,     050f / 255f,     055f / 255f),
-		new Color(030f / 255f,     075f / 255f,     115f / 255f),
+		new Color(040f / 255f,     040f / 255f,     120f / 255f),
 		new Color(095f / 255f,     050f / 255f,     120f / 255f),
 		new Color(075f / 255f,     095f / 255f,     030f / 255f),
 	};
 	
 	// level timing:
 	
-	public final static int   ScoreGoal  = 20;
+	public final static int   ScoreGoal  = 100;
 	public final static float StartTime  = 5.0f * 60.0f;
 	public final static float TimeFactor = 0.85f;
 	public final static int   MaxTimePow = 10;   
