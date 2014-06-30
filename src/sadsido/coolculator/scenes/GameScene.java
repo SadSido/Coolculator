@@ -146,6 +146,9 @@ public class GameScene extends Scene
 		
 		m_animationSet.add(button);
 		button.playSelectAnimation();
+		
+		// play button sound:
+		m_activity.playButtonSound();
 	}
 	
 	//*******************************************************************************************
@@ -177,6 +180,9 @@ public class GameScene extends Scene
 				m_animationSet.add(selBtn);
 				selBtn.playRemoveEquationAnimation(0.05f * colNo, color);
 			}
+			
+			// play sound:
+			m_activity.playEquationSound();
 		}
 	}
 	

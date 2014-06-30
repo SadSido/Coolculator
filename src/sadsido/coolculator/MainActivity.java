@@ -1,5 +1,9 @@
 package sadsido.coolculator;
 
+import java.io.IOException;
+
+import org.andengine.audio.sound.Sound;
+import org.andengine.audio.sound.SoundFactory;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
@@ -47,6 +51,9 @@ public class MainActivity extends SimpleBaseGameActivity
 	private ITextureRegion m_texRecord;
 	private ITextureRegion m_texTimebar;
 	private ITextureRegion m_texCCLogo;
+	
+	private Sound m_sndButton;
+	private Sound m_sndEquation;
 	
 	//*******************************************************************************************
 	
@@ -100,13 +107,23 @@ public class MainActivity extends SimpleBaseGameActivity
 	public ITextureRegion getCCLogoTexture()
 	{ return m_texCCLogo; }
 	
+	public void playButtonSound()
+	{ m_sndButton.play(); }
+	
+	public void playEquationSound()
+	{ m_sndEquation.play(); }
+
 	//*******************************************************************************************
 
 	@Override
 	public EngineOptions onCreateEngineOptions() 
 	{
 		m_camera = new Camera(0, 0, 1920, 1080);
-		return new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, new FillResolutionPolicy(), m_camera);	
+		
+		EngineOptions eop = new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, new FillResolutionPolicy(), m_camera);
+		eop.getAudioOptions().setNeedsSound(true);
+		
+		return eop;
 	}
 
 	@Override
@@ -135,6 +152,17 @@ public class MainActivity extends SimpleBaseGameActivity
 			loadRepeatingTextures();
 		}
 		catch (TextureAtlasBuilderException ex)
+		{
+			ex.printStackTrace();
+		}
+		
+		// prepare sounds:
+		try
+		{
+			m_sndButton = SoundFactory.createSoundFromAsset(this.getSoundManager(), this.getApplicationContext(), "button.wav");		
+			m_sndEquation = SoundFactory.createSoundFromAsset(this.getSoundManager(), this.getApplicationContext(), "equation.wav");		
+		}
+		catch (IOException ex)
 		{
 			ex.printStackTrace();
 		}
