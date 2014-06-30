@@ -1,6 +1,5 @@
 package sadsido.coolculator.game;
 
-import org.andengine.entity.modifier.AlphaModifier;
 import org.andengine.entity.modifier.ColorModifier;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.sprite.Sprite;
@@ -50,17 +49,10 @@ public class Background extends Rectangle
 	}
 
 	//*******************************************************************************************
-	
-	public void playFadeinAnimation()
-	{
-		registerEntityModifier(new AlphaModifier(0.5f, 0.0f, 1.0f));
-	}
-	
-	//*******************************************************************************************
 
 	public void playLevelEndAnimation()
 	{
-		registerEntityModifier(new ColorModifier(0.7f, getColor(),  Color.BLACK));		
+		registerEntityModifier(new ColorModifier(0.8f, getColor(), Color.BLACK));		
 	}
 	
 	public void playLevelBeginAnimation(int level)
@@ -68,7 +60,7 @@ public class Background extends Rectangle
 		m_level = level;
 		m_index = level % Const.BackgroundColors.length;
 					
-		registerEntityModifier(new ColorModifier(0.7f, getColor(), Const.BackgroundColors[m_index]));		
+		registerEntityModifier(new ColorModifier(0.8f, getColor(), Const.BackgroundColors[m_index]));		
 	}
 	
 	//*******************************************************************************************

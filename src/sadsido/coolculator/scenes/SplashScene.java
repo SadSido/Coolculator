@@ -32,9 +32,6 @@ public class SplashScene extends Scene implements IOnSceneTouchListener
 		
 		// handle touch event:
 		setOnSceneTouchListener(this);
-		
-		// trigger initial animation:
-		back.playFadeinAnimation();
 	}
 
 	//*******************************************************************************************
