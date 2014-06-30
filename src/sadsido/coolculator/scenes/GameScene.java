@@ -500,7 +500,7 @@ public class GameScene extends Scene
 		for (int index : m_selections)
 		{ if (index != first) return false; }
 		
-		return true;
+		return first != NO_SELECTION;
 	}
 		
 	private boolean isEquationValid()
@@ -530,7 +530,6 @@ public class GameScene extends Scene
 		
 		if (m_buttons[m_selections[0]][0].sign() == Sign.Multiply) { bonus *= 2; }
 		if (m_buttons[m_selections[1]][1].sign() == Sign.Multiply) { bonus *= 2; }
-		if (singleRowSelected()) { bonus *= 2; }
 		
 		return bonus;
 	}
