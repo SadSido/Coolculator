@@ -288,25 +288,18 @@ public class GameScene extends Scene
 		m_animationSet.remove(button);
 		if (hasAnimation()) { return; }
 		
-		// here: update buttons:
-		
-		// trigger background animation:
-		
+		// trigger background animation:		
 		m_back.playLevelBeginAnimation(m_score.level());
 		
 		// time bar animation:
 		
 		resetTimebar();
-
-		reuseSelectedButtons();
-		
-		updateButtonIndices(true);
-		
-		
+		reinitSelectedButtons();		
+		updateButtonIndices();
+		updateButtonPositions();		
 		resetSelection();
 		
 		// trigger new level animation:
-
 		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
 		for (int rowNo = 0; rowNo < Const.Rows; ++ rowNo)
 		{
@@ -341,7 +334,7 @@ public class GameScene extends Scene
 		if (!hasAnimation())
 		{
 			// set new values for selected buttons:
-			reuseSelectedButtons();
+			reinitSelectedButtons();
 			
 			// play emerging animation for selected buttons:
 			final float flyFr = m_activity.getCamera().getHeight();
@@ -358,65 +351,17 @@ public class GameScene extends Scene
 		}
 	}
 	
-	private void reuseSelectedButtons()
-	{
-		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
-		{
-			final Button btn = m_buttons[m_selections[colNo]][colNo];
-			
-			// get new value for the button:			
-			m_vpick[colNo].pushValue(btn.value());				
-			
-			final int  val = m_vpick[colNo].pickValue();
-			final Sign sgn = m_spick[colNo].pickSign(val);
-			
-			btn.setValueSign(val, sgn);				
-
-			// restore button geometry and color:			
-			btn.setColor(Color.WHITE);
-			btn.setScaleX(1.0f);
-			btn.setScaleY(1.0f);
-		}
-	}
-	
 	public void onEmergeAnimationFinished(Button button)
 	{
 		m_animationSet.remove(button);
 
 		if (!hasAnimation())
 		{
-			updateButtonIndices(false);
+			updateButtonIndices();
 			resetSelection();
 		}
 	}
-	
-	private void updateButtonIndices(boolean withPosition)
-	{
-		// we have to re-assign correct indices to all buttons,
-		// as the selected buttons are now at the bottom:
 		
-		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
-		{
-			final int selection = m_selections[colNo];
-			Button selectedBtn  = m_buttons[selection][colNo];
-			
-			for (int rowNo = selection; rowNo < (Const.Rows - 1); ++ rowNo)
-			{ 
-				m_buttons[rowNo][colNo] = m_buttons[rowNo + 1][colNo];
-				m_buttons[rowNo][colNo].setRowCol(rowNo, colNo);
-				
-				if (withPosition)
-				{ m_buttons[rowNo][colNo].setY(m_layout.rcButton(colNo, rowNo).top); }
-			}
-		
-			m_buttons[Const.Rows - 1][colNo] = selectedBtn;
-			m_buttons[Const.Rows - 1][colNo].setRowCol(Const.Rows - 1, colNo);
-
-			if (withPosition)
-			{ m_buttons[Const.Rows - 1][colNo].setY(m_layout.rcButton(colNo, Const.Rows - 1).top); }
-		}
-	}
-	
 	public void onEndgameAnimationFinished(Button button)
 	{
 		// pop animation out of the set:
@@ -475,6 +420,62 @@ public class GameScene extends Scene
 	
 	private boolean hasAnimation()
 	{ return !m_animationSet.isEmpty(); }
+	
+	private void reinitSelectedButtons()
+	{
+		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
+		{
+			final Button btn = m_buttons[m_selections[colNo]][colNo];
+			
+			// get new value for the button:			
+			m_vpick[colNo].pushValue(btn.value());				
+			
+			final int  val = m_vpick[colNo].pickValue();
+			final Sign sgn = m_spick[colNo].pickSign(val);
+			
+			btn.setValueSign(val, sgn);				
+
+			// restore button geometry and color:			
+			btn.setColor(Color.WHITE);
+			btn.setScaleX(1.0f);
+			btn.setScaleY(1.0f);
+		}
+	}
+	
+	private void updateButtonIndices()
+	{
+		// when we push selection at the bottom, all buttons
+		// after selection should shift indices:
+		
+		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
+		{
+			final int selection = m_selections[colNo];
+			final Button button = m_buttons[selection][colNo];
+			
+			for (int rowNo = selection; rowNo < (Const.Rows - 1); ++ rowNo)
+			{ 
+				m_buttons[rowNo][colNo] = m_buttons[rowNo + 1][colNo];
+				m_buttons[rowNo][colNo].setRowCol(rowNo, colNo);
+			}
+		
+			// selected buttons then should be placed at the bottom:			
+			m_buttons[Const.Rows - 1][colNo] = button;
+			m_buttons[Const.Rows - 1][colNo].setRowCol(Const.Rows - 1, colNo);
+		}
+	}
+
+	private void updateButtonPositions()
+	{
+		// sometimes the buttons are re-initialized without animation,
+		// so we must ensure, that all the positions are correct:
+		
+		for (int rowNo = 0; rowNo < Const.Rows; ++ rowNo)
+		for (int colNo = 0; colNo < Const.Cols; ++ colNo)
+		{
+			Rect rect = m_layout.rcButton(colNo, rowNo);
+			m_buttons[rowNo][colNo].setY(rect.top);
+		}
+	}
 	
 	// selection helpers:
 	
