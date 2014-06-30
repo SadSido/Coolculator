@@ -3,7 +3,6 @@ package sadsido.coolculator.scenes;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
-import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import sadsido.coolculator.Layout;
 import sadsido.coolculator.MainActivity;

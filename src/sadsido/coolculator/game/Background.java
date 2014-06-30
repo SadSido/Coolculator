@@ -1,11 +1,7 @@
 package sadsido.coolculator.game;
 
-import javax.microedition.khronos.opengles.GL10;
-
 import org.andengine.entity.modifier.AlphaModifier;
 import org.andengine.entity.modifier.ColorModifier;
-import org.andengine.entity.modifier.IEntityModifier;
-import org.andengine.entity.modifier.SequenceEntityModifier;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.ITextureRegion;

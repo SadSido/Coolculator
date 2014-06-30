@@ -19,7 +19,6 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 
 import sadsido.coolculator.scenes.SplashScene;
-import sadsido.coolculator.scenes.StartScene;
 import android.graphics.Color;
 
 

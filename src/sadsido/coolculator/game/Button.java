@@ -1,8 +1,5 @@
 package sadsido.coolculator.game;
 
-import javax.microedition.khronos.opengles.GL10;
-
-import org.andengine.entity.modifier.AlphaModifier;
 import org.andengine.entity.modifier.ColorModifier;
 import org.andengine.entity.modifier.IEntityModifier;
 import org.andengine.entity.modifier.MoveXModifier;
@@ -19,9 +16,9 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.Color;
 import org.andengine.util.modifier.ease.EaseQuadIn;
 import org.andengine.util.modifier.ease.EaseQuadInOut;
-import org.andengine.util.modifier.ease.EaseQuadOut;
-import sadsido.coolculator.MainActivity;
+
 import sadsido.coolculator.Layout.Rect;
+import sadsido.coolculator.MainActivity;
 import sadsido.coolculator.scenes.GameScene;
 
 

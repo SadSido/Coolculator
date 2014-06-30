@@ -1,26 +1,21 @@
 package sadsido.coolculator.scenes;
 
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
-import org.andengine.entity.IEntity;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.sprite.Sprite;
-import org.andengine.entity.text.Text;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.Color;
 
 import sadsido.coolculator.Layout;
-import sadsido.coolculator.MainActivity;
 import sadsido.coolculator.Layout.Rect;
+import sadsido.coolculator.MainActivity;
 import sadsido.coolculator.game.Background;
 import sadsido.coolculator.game.Button;
 import sadsido.coolculator.game.Const;
 import sadsido.coolculator.game.Score;
 import sadsido.coolculator.game.Sign;
 import sadsido.coolculator.game.Timebar;
-import sadsido.coolculator.pick.RndValuePicker;
 import sadsido.coolculator.pick.SignPicker;
 import sadsido.coolculator.pick.ValuePicker;
 
