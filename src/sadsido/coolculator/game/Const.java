@@ -10,6 +10,9 @@ public class Const
 	
 	public final static int Rows = 4;
 	public final static int Cols = 4;
+
+	public final static int LastRow = Rows - 1;
+	public final static int LastCol = Cols - 1;
 	
 	// colors of the button signs:
 	

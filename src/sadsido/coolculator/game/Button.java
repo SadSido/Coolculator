@@ -192,7 +192,7 @@ public class Button extends Sprite
 		registerEntityModifier(modifier);
 	}
 	
-	public void playFallingAnimation(float delay, float distance)
+	public void playFillGapsAnimation(float delay, float distance)
 	{
 		IEntityModifier modifier = new SequenceEntityModifier
 		(			
@@ -202,13 +202,13 @@ public class Button extends Sprite
 		{
 			@Override
 			protected void onModifierFinished(org.andengine.entity.IEntity pItem)
-			{ m_scene.onFallingAnimationFinished(Button.this); };
+			{ m_scene.onFillGapsAnimationFinished(Button.this); };
 		};
 		
 		registerEntityModifier(modifier);		
 	}
 	
-	public void playEmergeAnimation(float delay, float toY)
+	public void playPopupAnimation(float delay, float toY)
 	{
 		// that's insane!
 		IEntityModifier modifier = new SequenceEntityModifier
@@ -219,13 +219,13 @@ public class Button extends Sprite
 		{
 			@Override
 			protected void onModifierFinished(org.andengine.entity.IEntity pItem)
-			{ m_scene.onEmergeAnimationFinished(Button.this); };
+			{ m_scene.onPopupAnimationFinished(Button.this); };
 		};
 		
 		registerEntityModifier(modifier);
 	}
 
-	public void playEndgameAnimation(float delay, float toY)
+	public void playGameOverAnimation(float delay, float toY)
 	{
 		// that's insane!
 		IEntityModifier modifier = new SequenceEntityModifier
@@ -236,7 +236,7 @@ public class Button extends Sprite
 		{
 			@Override
 			protected void onModifierFinished(org.andengine.entity.IEntity pItem)
-			{ m_scene.onEndgameAnimationFinished(Button.this); };
+			{ m_scene.onGameOverAnimationFinished(Button.this); };
 		};
 		
 		registerEntityModifier(modifier);
