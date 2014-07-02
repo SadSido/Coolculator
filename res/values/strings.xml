@@ -4,10 +4,10 @@
     <string name="menu_start">Start game</string>
     <string name="menu_howto">How to play</string>
     <string-array name="instructions">
-        <item >Tap the buttons\nto create correct equations</item>
-        <item >Correct answers increase\nyour score</item>
-        <item >Bonus buttons\ndouble your result</item>
-        <item>Can you beat the highscore\nbefore the time runs out?</item>
+        <item >Tap the buttons in each column\nto create correct equations.</item>
+        <item >Correct ones increase the score,\nwrong ones give penalty.</item>
+        <item >Buttons with multiplications\ngive you double bonus!</item>
+        <item >Can you beat the highscore\nbefore the time runs out?</item>
     </string-array>
 
 </resources>
