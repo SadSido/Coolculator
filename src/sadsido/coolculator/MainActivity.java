@@ -54,6 +54,7 @@ public class MainActivity extends SimpleBaseGameActivity
 	
 	private Sound m_sndButton;
 	private Sound m_sndEquation;
+	private Sound m_sndMenu;
 	
 	//*******************************************************************************************
 	
@@ -113,6 +114,9 @@ public class MainActivity extends SimpleBaseGameActivity
 	public void playEquationSound()
 	{ m_sndEquation.play(); }
 
+	public void playMenuSound()
+	{ m_sndMenu.play(); }
+
 	//*******************************************************************************************
 
 	@Override
@@ -161,6 +165,7 @@ public class MainActivity extends SimpleBaseGameActivity
 		{
 			m_sndButton = SoundFactory.createSoundFromAsset(this.getSoundManager(), this.getApplicationContext(), "button.wav");		
 			m_sndEquation = SoundFactory.createSoundFromAsset(this.getSoundManager(), this.getApplicationContext(), "equation.wav");		
+			m_sndMenu = SoundFactory.createSoundFromAsset(this.getSoundManager(), this.getApplicationContext(), "menu.wav");		
 		}
 		catch (IOException ex)
 		{

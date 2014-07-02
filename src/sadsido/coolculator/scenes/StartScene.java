@@ -89,6 +89,8 @@ public class StartScene extends MenuScene implements IOnMenuItemClickListener
 	@Override
 	public boolean onMenuItemClicked(MenuScene scene, IMenuItem item, float localx, float localy) 
 	{
+		m_activity.playMenuSound();
+		
 		switch (item.getID())
 		{
 		case MENU_START:
