@@ -3,5 +3,10 @@
     <string name="app_name">Coolculator</string>
     <string name="menu_start">Start game</string>
     <string name="menu_howto">How to play</string>
+    <string-array name="instructions">
+        <item >Tap the buttons\nto create correct equations</item>
+        <item >Correct answers\nincrease your score\nand give you bonuses</item>
+        <item >Can you beat the highscore\nbefore the time runs out?</item>
+    </string-array>
 
 </resources>

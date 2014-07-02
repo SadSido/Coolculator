@@ -97,6 +97,7 @@ public class StartScene extends MenuScene implements IOnMenuItemClickListener
 			return true;
 		}
 		case MENU_HOWTO:
+			m_activity.setScene(new HowtoScene());
 			return true;
 		}
 		
