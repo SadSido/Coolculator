@@ -53,9 +53,11 @@ public class StartScene extends MenuScene implements IOnMenuItemClickListener
 		Rect rcLogo = layout.rcCCLogo();
 		
 		Rectangle mrect = new Rectangle(rcMenu.left, rcMenu.top, rcMenu.width(), rcMenu.height(), VBO);
+		mrect.setScale(0f, 0f);
 		mrect.setAlpha(0.1f);
 
 		Sprite mlogo = new Sprite(rcLogo.left, rcLogo.top, rcLogo.width(), rcLogo.height(), m_activity.getCCLogoTexture(), VBO); 
+		mlogo.setAlpha(0f);
 		
 		attachChild(mrect);
 		attachChild(mlogo);
@@ -65,6 +67,8 @@ public class StartScene extends MenuScene implements IOnMenuItemClickListener
 		IMenuItem start = new TextMenuItem(MENU_START, m_activity.getMenuFont(), m_activity.getString(R.string.menu_start), VBO);
 		IMenuItem howto = new TextMenuItem(MENU_HOWTO, m_activity.getMenuFont(), m_activity.getString(R.string.menu_howto), VBO);
 		
+		start.setX(layout.width());
+		howto.setX(layout.width());
 		start.setY(rcMenu.centerY() - start.getHeight() - 10f);
 		howto.setY(rcMenu.centerY() + 10f);
 		
