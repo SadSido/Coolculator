@@ -5,8 +5,9 @@
     <string name="menu_howto">How to play</string>
     <string-array name="instructions">
         <item >Tap the buttons\nto create correct equations</item>
-        <item >Correct answers\nincrease your score\nand give you bonuses</item>
-        <item >Can you beat the highscore\nbefore the time runs out?</item>
+        <item >Correct answers increase\nyour score</item>
+        <item >Bonus buttons\ndouble your result</item>
+        <item>Can you beat the highscore\nbefore the time runs out?</item>
     </string-array>
 
 </resources>

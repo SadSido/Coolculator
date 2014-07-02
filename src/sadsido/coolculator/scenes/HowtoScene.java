@@ -8,12 +8,11 @@ import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
-import org.andengine.util.modifier.SequenceModifier;
 import org.andengine.util.modifier.ease.EaseQuadIn;
 
-import sadsido.coolculator.R;
 import sadsido.coolculator.Layout;
 import sadsido.coolculator.MainActivity;
+import sadsido.coolculator.R;
 import sadsido.coolculator.game.Background;
 
 
@@ -51,10 +50,12 @@ public class HowtoScene extends Scene implements IOnSceneTouchListener
 		for (int no = 0; no < instructions.length; ++ no)
 		{
 			m_texts[no] = new Text(0,0, m_activity.getMenuFont(), instructions[no], m_activity.getVBO());
-			attachChild(m_texts[no]);
 			
+			m_texts[no].setAlpha(0.75f);
 			m_texts[no].setX(m_layout.width());
 			m_texts[no].setY((m_layout.height() - m_texts[no].getHeight()) / 2f);
+
+			attachChild(m_texts[no]);
 		}		
 		
 		// handle touch event:
@@ -118,7 +119,7 @@ public class HowtoScene extends Scene implements IOnSceneTouchListener
 		{
 			IEntityModifier modif = new SequenceEntityModifier
 			( 
-				new MoveXModifier(0.20f, intoText.getX(), intoText.getX()),
+				new MoveXModifier(0.10f, intoText.getX(), intoText.getX()),
 				new MoveXModifier(0.35f, intoText.getX(), (m_layout.width() - intoText.getWidth()) / 2f, EaseQuadIn.getInstance())
 			)
 			{
