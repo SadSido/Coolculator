@@ -1,11 +1,19 @@
 package sadsido.coolculator.game;
 
+import android.annotation.SuppressLint;
 import org.andengine.entity.Entity;
+import org.andengine.entity.modifier.ColorModifier;
+import org.andengine.entity.modifier.IEntityModifier;
+import org.andengine.entity.modifier.ParallelEntityModifier;
+import org.andengine.entity.modifier.ScaleAtModifier;
+import org.andengine.entity.modifier.ScaleModifier;
+import org.andengine.entity.modifier.SequenceEntityModifier;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.color.Color;
 
 import sadsido.coolculator.Layout.Rect;
 
@@ -21,6 +29,8 @@ public class Score extends Entity
 	private int    m_level;
 	private Text   m_text;
 	private Sprite m_icon;
+	private float  m_width;
+	private float  m_height;
 	
 	//*******************************************************************************************
 
@@ -48,6 +58,10 @@ public class Score extends Entity
 			m_text.setPosition(m_icon.getX() - m_text.getWidth(), posY);
 		}
 		
+		// remember dimensions:
+		m_width = rect.width();
+		m_height = rect.height();
+		
 		// set pos for root entity:
 		setPosition(rect.left, rect.top);
 	}
@@ -66,12 +80,28 @@ public class Score extends Entity
 		m_level = m_score / Const.ScoreGoal;
 		
 		m_text.setText(formatScore(m_score));
+		
+		if (delta > 0)
+		{ playChangeAnimation(); }
 	}
+	
+	
 	
 	//*******************************************************************************************
 
+	@SuppressLint("DefaultLocale")
 	private static String formatScore(int score)
 	{ return String.format("%05d", score); }
 	
+	public void playChangeAnimation()
+	{
+		IEntityModifier modif = new SequenceEntityModifier
+		(
+			new ScaleAtModifier(0.15f, 1.0f, 1.2f, m_width / 2f, m_height / 2f),
+			new ScaleAtModifier(0.15f, 1.2f, 1.0f, m_width / 2f, m_height / 2f)
+		);
+		registerEntityModifier(modif);
+	}
+
 	//*******************************************************************************************
 }
